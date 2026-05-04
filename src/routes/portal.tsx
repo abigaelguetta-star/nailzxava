@@ -1,4 +1,4 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useAuth } from "@/lib/auth";
 import { useMoodboard } from "@/lib/moodboard";
 import { PoseCard } from "@/components/PoseCard";

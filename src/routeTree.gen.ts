@@ -9,8 +9,32 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SelectorRouteImport } from './routes/selector'
+import { Route as PortalRouteImport } from './routes/portal'
+import { Route as BookingRouteImport } from './routes/booking'
+import { Route as AftercareRouteImport } from './routes/aftercare'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SelectorRoute = SelectorRouteImport.update({
+  id: '/selector',
+  path: '/selector',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingRoute = BookingRouteImport.update({
+  id: '/booking',
+  path: '/booking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AftercareRoute = AftercareRouteImport.update({
+  id: '/aftercare',
+  path: '/aftercare',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +43,72 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aftercare': typeof AftercareRoute
+  '/booking': typeof BookingRoute
+  '/portal': typeof PortalRoute
+  '/selector': typeof SelectorRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aftercare': typeof AftercareRoute
+  '/booking': typeof BookingRoute
+  '/portal': typeof PortalRoute
+  '/selector': typeof SelectorRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aftercare': typeof AftercareRoute
+  '/booking': typeof BookingRoute
+  '/portal': typeof PortalRoute
+  '/selector': typeof SelectorRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/aftercare' | '/booking' | '/portal' | '/selector'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/aftercare' | '/booking' | '/portal' | '/selector'
+  id: '__root__' | '/' | '/aftercare' | '/booking' | '/portal' | '/selector'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AftercareRoute: typeof AftercareRoute
+  BookingRoute: typeof BookingRoute
+  PortalRoute: typeof PortalRoute
+  SelectorRoute: typeof SelectorRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/selector': {
+      id: '/selector'
+      path: '/selector'
+      fullPath: '/selector'
+      preLoaderRoute: typeof SelectorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portal': {
+      id: '/portal'
+      path: '/portal'
+      fullPath: '/portal'
+      preLoaderRoute: typeof PortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/booking': {
+      id: '/booking'
+      path: '/booking'
+      fullPath: '/booking'
+      preLoaderRoute: typeof BookingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aftercare': {
+      id: '/aftercare'
+      path: '/aftercare'
+      fullPath: '/aftercare'
+      preLoaderRoute: typeof AftercareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +121,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AftercareRoute: AftercareRoute,
+  BookingRoute: BookingRoute,
+  PortalRoute: PortalRoute,
+  SelectorRoute: SelectorRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
