@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth";
 import { useMoodboard } from "@/lib/moodboard";
+import { supabase } from "@/integrations/supabase/client";
 import { PoseCard } from "@/components/PoseCard";
 import { Heart, Sparkles, Calendar, BookOpen } from "lucide-react";
 
@@ -14,11 +16,14 @@ export const Route = createFileRoute("/portal")({
   }),
 });
 
-// Mock data
-const MOCK_RDV = [
-  { id: 1, date: "12 mai 2026", service: "Pose gel + nail art", time: "14:00", duration: 90, vibe: "🎵 R&B / Hip-hop", status: "À venir" as const },
-  { id: 2, date: "8 avr 2026", service: "Pose gel complète", time: "11:00", duration: 60, vibe: "🤫 Mode silence", status: "Terminé" as const },
-];
+interface Appt {
+  id: string;
+  starts_at: string;
+  service_name: string;
+  duration_minutes: number;
+  vibe: string | null;
+  status: string;
+}
 
 function Portal() {
   const { user, profile, loading } = useAuth();
