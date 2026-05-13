@@ -262,7 +262,7 @@ function Booking() {
                   </p>
                 )}
 
-                <button onClick={confirm} className="btn-pink mt-8 w-full sm:w-auto">
+                <button onClick={confirm} disabled={submitting || !user} className="btn-pink mt-8 w-full sm:w-auto disabled:opacity-40">
                   <span>Confirmer la réservation</span>
                 </button>
               </div>
