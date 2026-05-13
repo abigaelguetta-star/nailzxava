@@ -15,9 +15,10 @@ const ADMIN_NAV = { to: "/admin", label: "Admin" } as const;
 
 export function Nav() {
   const { theme, toggle } = useTheme();
-  const { user, profile, signOut } = useAuth();
+  const { user, profile, isAdmin, signOut } = useAuth();
   const [authOpen, setAuthOpen] = useState(false);
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const navItems = isAdmin ? [...NAV, ADMIN_NAV] : NAV;
 
   return (
     <>
