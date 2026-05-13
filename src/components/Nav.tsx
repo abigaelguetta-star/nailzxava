@@ -11,6 +11,8 @@ const NAV = [
   { to: "/portal", label: "Mon Portal" },
 ] as const;
 
+const ADMIN_NAV = { to: "/admin", label: "Admin" } as const;
+
 export function Nav() {
   const { theme, toggle } = useTheme();
   const { user, profile, signOut } = useAuth();
