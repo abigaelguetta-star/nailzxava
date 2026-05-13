@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
-import { POSES, VIBES, type Vibe } from "@/lib/poses";
+import { useState, useMemo, useEffect } from "react";
+import { POSES, VIBES } from "@/lib/poses";
 import { PoseCard } from "@/components/PoseCard";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/selector")({
   component: Selector,
@@ -13,12 +14,28 @@ export const Route = createFileRoute("/selector")({
   }),
 });
 
+interface DisplayPose { id: string; name: string; vibe: string; image: string }
+
 function Selector() {
-  const [active, setActive] = useState<Vibe | "Tout">("Tout");
+  const [active, setActive] = useState<string>("Tout");
+  const [dbItems, setDbItems] = useState<DisplayPose[]>([]);
+
+  useEffect(() => {
+    supabase.from("gallery_items").select("id,name,vibe,image_url").eq("published", true)
+      .order("sort_order").order("created_at", { ascending: false })
+      .then(({ data }) => {
+        if (data) setDbItems(data.map((d) => ({ id: d.id, name: d.name, vibe: d.vibe, image: d.image_url })));
+      });
+  }, []);
+
+  const all: DisplayPose[] = useMemo(() => {
+    const fromStatic = POSES.map((p) => ({ id: p.id, name: p.name, vibe: p.vibe as string, image: p.image }));
+    return [...dbItems, ...fromStatic];
+  }, [dbItems]);
 
   const filtered = useMemo(
-    () => active === "Tout" ? POSES : POSES.filter((p) => p.vibe === active),
-    [active]
+    () => active === "Tout" ? all : all.filter((p) => p.vibe === active),
+    [active, all]
   );
 
   return (
@@ -34,7 +51,6 @@ function Selector() {
           Chaque pose est une création unique. Like ce qui t'inspire pour le retrouver dans ton moodboard.
         </p>
 
-        {/* Filters */}
         <div className="flex flex-wrap gap-2 mt-12 no-scrollbar overflow-x-auto">
           <button onClick={() => setActive("Tout")} className={`pill ${active === "Tout" ? "active" : ""}`}>
             Tout
