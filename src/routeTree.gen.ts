@@ -13,6 +13,7 @@ import { Route as SelectorRouteImport } from './routes/selector'
 import { Route as PortalRouteImport } from './routes/portal'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as AftercareRouteImport } from './routes/aftercare'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 
 const SelectorRoute = SelectorRouteImport.update({
@@ -35,6 +36,11 @@ const AftercareRoute = AftercareRouteImport.update({
   path: '/aftercare',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,6 +49,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/aftercare': typeof AftercareRoute
   '/booking': typeof BookingRoute
   '/portal': typeof PortalRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/aftercare': typeof AftercareRoute
   '/booking': typeof BookingRoute
   '/portal': typeof PortalRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/aftercare': typeof AftercareRoute
   '/booking': typeof BookingRoute
   '/portal': typeof PortalRoute
@@ -65,14 +74,28 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/aftercare' | '/booking' | '/portal' | '/selector'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/aftercare'
+    | '/booking'
+    | '/portal'
+    | '/selector'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/aftercare' | '/booking' | '/portal' | '/selector'
-  id: '__root__' | '/' | '/aftercare' | '/booking' | '/portal' | '/selector'
+  to: '/' | '/admin' | '/aftercare' | '/booking' | '/portal' | '/selector'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/aftercare'
+    | '/booking'
+    | '/portal'
+    | '/selector'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   AftercareRoute: typeof AftercareRoute
   BookingRoute: typeof BookingRoute
   PortalRoute: typeof PortalRoute
@@ -109,6 +132,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AftercareRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -121,6 +151,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   AftercareRoute: AftercareRoute,
   BookingRoute: BookingRoute,
   PortalRoute: PortalRoute,
