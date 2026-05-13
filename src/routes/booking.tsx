@@ -166,44 +166,52 @@ function Booking() {
 
             {step === 2 && (
               <div>
-                <p className="eyebrow mb-4">Choisis un jour disponible</p>
-                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
-                  {AVAILABLE_DAYS.map((d) => {
-                    const sel = date?.toDateString() === d.toDateString();
-                    return (
-                      <button
-                        key={d.toISOString()}
-                        onClick={() => { setDate(d); setSlot(null); }}
-                        className={`p-3 border text-center transition-colors ${sel ? "bg-primary border-primary text-cream" : "border-border hover:border-foreground"}`}
-                      >
-                        <p className="text-xs uppercase tracking-wider opacity-70">{d.toLocaleDateString("fr-FR", { weekday: "short" })}</p>
-                        <p className="font-display text-2xl mt-1">{d.getDate()}</p>
-                        <p className="text-[10px] uppercase mt-1 opacity-70">{d.toLocaleDateString("fr-FR", { month: "short" })}</p>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {date && (
-                  <div className="mt-10">
-                    <p className="eyebrow mb-4">Créneaux le {date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {SLOTS.map((s) => {
-                        const taken = (TAKEN[date.toDateString()] || []).includes(s);
-                        const sel = slot === s;
+                {days.length === 0 ? (
+                  <p className="font-display text-2xl italic text-muted-foreground">
+                    Aucun créneau disponible pour l'instant. Reviens vite ♥
+                  </p>
+                ) : (
+                  <>
+                    <p className="eyebrow mb-4">Choisis un jour disponible</p>
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                      {days.map((d) => {
+                        const key = d.toDateString();
+                        const sel = activeDay === key;
                         return (
                           <button
-                            key={s}
-                            disabled={taken}
-                            onClick={() => setSlot(s)}
-                            className={`px-5 py-3 border text-sm uppercase tracking-[0.16em] transition-colors ${taken ? "line-through opacity-30 cursor-not-allowed" : sel ? "bg-primary border-primary text-cream" : "border-border hover:border-foreground"}`}
+                            key={key}
+                            onClick={() => { setActiveDay(key); setSelectedSlot(null); }}
+                            className={`p-3 border text-center transition-colors ${sel ? "bg-primary border-primary text-cream" : "border-border hover:border-foreground"}`}
                           >
-                            {s}
+                            <p className="text-xs uppercase tracking-wider opacity-70">{d.toLocaleDateString("fr-FR", { weekday: "short" })}</p>
+                            <p className="font-display text-2xl mt-1">{d.getDate()}</p>
+                            <p className="text-[10px] uppercase mt-1 opacity-70">{d.toLocaleDateString("fr-FR", { month: "short" })}</p>
                           </button>
                         );
                       })}
                     </div>
-                  </div>
+
+                    {activeDay && (
+                      <div className="mt-10">
+                        <p className="eyebrow mb-4">Créneaux le {new Date(activeDay).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}</p>
+                        <div className="flex flex-wrap gap-2">
+                          {(slotsByDay.get(activeDay) || []).map((s) => {
+                            const sel = selectedSlot?.id === s.id;
+                            const time = new Date(s.starts_at).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+                            return (
+                              <button
+                                key={s.id}
+                                onClick={() => setSelectedSlot(s)}
+                                className={`px-5 py-3 border text-sm uppercase tracking-[0.16em] transition-colors ${sel ? "bg-primary border-primary text-cream" : "border-border hover:border-foreground"}`}
+                              >
+                                {time}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             )}
