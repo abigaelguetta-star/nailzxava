@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { POSES, type Pose } from "@/lib/poses";
+import { POSES } from "@/lib/poses";
 import { toast } from "sonner";
 
 const LOCAL_KEY = "nailz-moodboard-local";
