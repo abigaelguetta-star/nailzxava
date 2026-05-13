@@ -29,7 +29,7 @@ export function Nav() {
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            {NAV.map((n) => (
+            {navItems.map((n) => (
               <Link
                 key={n.to}
                 to={n.to}
