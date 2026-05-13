@@ -12,6 +12,7 @@ interface AuthCtx {
   user: User | null;
   session: Session | null;
   profile: Profile | null;
+  isAdmin: boolean;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
   signUp: (email: string, password: string, firstName: string) => Promise<{ error?: string }>;
@@ -24,37 +25,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const loadUserData = (uid: string) => {
+    supabase.from("profiles").select("*").eq("id", uid).maybeSingle()
+      .then(({ data }) => setProfile(data as Profile | null));
+    supabase.from("user_roles").select("role").eq("user_id", uid).eq("role", "admin").maybeSingle()
+      .then(({ data }) => setIsAdmin(!!data));
+  };
 
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s);
       setUser(s?.user ?? null);
       if (s?.user) {
-        setTimeout(() => {
-          supabase
-            .from("profiles")
-            .select("*")
-            .eq("id", s.user.id)
-            .maybeSingle()
-            .then(({ data }) => setProfile(data as Profile | null));
-        }, 0);
+        setTimeout(() => loadUserData(s.user.id), 0);
       } else {
         setProfile(null);
+        setIsAdmin(false);
       }
     });
 
     supabase.auth.getSession().then(({ data: { session: s } }) => {
       setSession(s);
       setUser(s?.user ?? null);
-      if (s?.user) {
-        supabase
-          .from("profiles")
-          .select("*")
-          .eq("id", s.user.id)
-          .maybeSingle()
-          .then(({ data }) => setProfile(data as Profile | null));
-      }
+      if (s?.user) loadUserData(s.user.id);
       setLoading(false);
     });
 
@@ -85,7 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, session, profile, loading, signIn, signUp, signOut }}
+      value={{ user, session, profile, isAdmin, loading, signIn, signUp, signOut }}
     >
       {children}
     </AuthContext.Provider>

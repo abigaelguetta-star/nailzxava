@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { SERVICES, ADDONS, VIBES_RDV } from "@/lib/poses";
 import { useAuth } from "@/lib/auth";
+import { supabase } from "@/integrations/supabase/client";
 import { Check, Calendar as CalIcon } from "lucide-react";
 import { toast } from "sonner";
 
@@ -17,45 +18,78 @@ export const Route = createFileRoute("/booking")({
 
 const STEPS = ["Prestation", "Options", "Créneau", "Ambiance", "Confirmation"];
 
-// Mock disponibilités: certains jours du mois courant
-const TODAY = new Date();
-const AVAILABLE_DAYS = [3, 4, 6, 10, 11, 13, 17, 18, 20, 24, 25, 27].map((d) => {
-  const dt = new Date(TODAY.getFullYear(), TODAY.getMonth(), d);
-  return dt > TODAY ? dt : new Date(TODAY.getFullYear(), TODAY.getMonth() + 1, d);
-});
-const SLOTS = ["10:00", "11:30", "14:00", "15:30", "17:00"];
-const TAKEN: Record<string, string[]> = {};
+interface SlotRow { id: string; starts_at: string; duration_minutes: number; status: string }
 
 function Booking() {
   const { user } = useAuth();
   const [step, setStep] = useState(0);
   const [serviceId, setServiceId] = useState<string | null>(null);
   const [addonIds, setAddonIds] = useState<string[]>([]);
-  const [date, setDate] = useState<Date | null>(null);
-  const [slot, setSlot] = useState<string | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<SlotRow | null>(null);
   const [vibes, setVibes] = useState<string[]>([]);
+  const [slots, setSlots] = useState<SlotRow[]>([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [isNewClient, setIsNewClient] = useState(true);
+
+  useEffect(() => {
+    supabase.from("slots").select("*").eq("status", "open").gte("starts_at", new Date().toISOString())
+      .order("starts_at", { ascending: true })
+      .then(({ data }) => setSlots((data || []) as SlotRow[]));
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    supabase.from("appointments").select("id", { count: "exact", head: true }).eq("user_id", user.id)
+      .then(({ count }) => setIsNewClient((count ?? 0) === 0));
+  }, [user]);
 
   const service = SERVICES.find((s) => s.id === serviceId);
   const addons = ADDONS.filter((a) => addonIds.includes(a.id));
   const totalDuration = (service?.duration || 0) + addons.reduce((s, a) => s + a.duration, 0);
   const totalPrice = (service?.price || 0) + addons.reduce((s, a) => s + a.price, 0);
   const deposit = Math.round(totalPrice * 0.3);
-  const isNewClient = true; // mock — would come from user RDV history
+
+  // Group slots by day
+  const slotsByDay = useMemo(() => {
+    const map = new Map<string, SlotRow[]>();
+    for (const s of slots) {
+      const d = new Date(s.starts_at).toDateString();
+      if (!map.has(d)) map.set(d, []);
+      map.get(d)!.push(s);
+    }
+    return map;
+  }, [slots]);
+  const days = Array.from(slotsByDay.keys()).map((d) => new Date(d));
+  const [activeDay, setActiveDay] = useState<string | null>(null);
 
   const canNext = useMemo(() => {
     if (step === 0) return !!serviceId;
     if (step === 1) return true;
-    if (step === 2) return !!date && !!slot;
+    if (step === 2) return !!selectedSlot;
     if (step === 3) return vibes.length > 0;
     return true;
-  }, [step, serviceId, date, slot, vibes]);
+  }, [step, serviceId, selectedSlot, vibes]);
 
-  const confirm = () => {
-    if (!user) {
-      toast.error("Connecte-toi pour confirmer ta réservation.");
-      return;
-    }
+  const confirm = async () => {
+    if (!user) { toast.error("Connecte-toi pour confirmer ta réservation."); return; }
+    if (!service || !selectedSlot) return;
+    setSubmitting(true);
+    const { error } = await supabase.from("appointments").insert({
+      user_id: user.id,
+      slot_id: selectedSlot.id,
+      service_id: service.id,
+      service_name: service.name,
+      options: addons.map((a) => ({ id: a.id, name: a.name, price: a.price })),
+      starts_at: selectedSlot.starts_at,
+      duration_minutes: totalDuration,
+      total_price: totalPrice,
+      vibe: vibes.map((id) => VIBES_RDV.find((v) => v.id === id)?.title).filter(Boolean).join(" · "),
+      status: "pending",
+    });
+    setSubmitting(false);
+    if (error) { toast.error(error.message); return; }
     toast.success("Réservation enregistrée. À très vite ♥");
+    setStep(0); setServiceId(null); setAddonIds([]); setSelectedSlot(null); setVibes([]);
   };
 
   return (
@@ -132,44 +166,52 @@ function Booking() {
 
             {step === 2 && (
               <div>
-                <p className="eyebrow mb-4">Choisis un jour disponible</p>
-                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
-                  {AVAILABLE_DAYS.map((d) => {
-                    const sel = date?.toDateString() === d.toDateString();
-                    return (
-                      <button
-                        key={d.toISOString()}
-                        onClick={() => { setDate(d); setSlot(null); }}
-                        className={`p-3 border text-center transition-colors ${sel ? "bg-primary border-primary text-cream" : "border-border hover:border-foreground"}`}
-                      >
-                        <p className="text-xs uppercase tracking-wider opacity-70">{d.toLocaleDateString("fr-FR", { weekday: "short" })}</p>
-                        <p className="font-display text-2xl mt-1">{d.getDate()}</p>
-                        <p className="text-[10px] uppercase mt-1 opacity-70">{d.toLocaleDateString("fr-FR", { month: "short" })}</p>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {date && (
-                  <div className="mt-10">
-                    <p className="eyebrow mb-4">Créneaux le {date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {SLOTS.map((s) => {
-                        const taken = (TAKEN[date.toDateString()] || []).includes(s);
-                        const sel = slot === s;
+                {days.length === 0 ? (
+                  <p className="font-display text-2xl italic text-muted-foreground">
+                    Aucun créneau disponible pour l'instant. Reviens vite ♥
+                  </p>
+                ) : (
+                  <>
+                    <p className="eyebrow mb-4">Choisis un jour disponible</p>
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                      {days.map((d) => {
+                        const key = d.toDateString();
+                        const sel = activeDay === key;
                         return (
                           <button
-                            key={s}
-                            disabled={taken}
-                            onClick={() => setSlot(s)}
-                            className={`px-5 py-3 border text-sm uppercase tracking-[0.16em] transition-colors ${taken ? "line-through opacity-30 cursor-not-allowed" : sel ? "bg-primary border-primary text-cream" : "border-border hover:border-foreground"}`}
+                            key={key}
+                            onClick={() => { setActiveDay(key); setSelectedSlot(null); }}
+                            className={`p-3 border text-center transition-colors ${sel ? "bg-primary border-primary text-cream" : "border-border hover:border-foreground"}`}
                           >
-                            {s}
+                            <p className="text-xs uppercase tracking-wider opacity-70">{d.toLocaleDateString("fr-FR", { weekday: "short" })}</p>
+                            <p className="font-display text-2xl mt-1">{d.getDate()}</p>
+                            <p className="text-[10px] uppercase mt-1 opacity-70">{d.toLocaleDateString("fr-FR", { month: "short" })}</p>
                           </button>
                         );
                       })}
                     </div>
-                  </div>
+
+                    {activeDay && (
+                      <div className="mt-10">
+                        <p className="eyebrow mb-4">Créneaux le {new Date(activeDay).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}</p>
+                        <div className="flex flex-wrap gap-2">
+                          {(slotsByDay.get(activeDay) || []).map((s) => {
+                            const sel = selectedSlot?.id === s.id;
+                            const time = new Date(s.starts_at).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+                            return (
+                              <button
+                                key={s.id}
+                                onClick={() => setSelectedSlot(s)}
+                                className={`px-5 py-3 border text-sm uppercase tracking-[0.16em] transition-colors ${sel ? "bg-primary border-primary text-cream" : "border-border hover:border-foreground"}`}
+                              >
+                                {time}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             )}
@@ -220,7 +262,7 @@ function Booking() {
                   </p>
                 )}
 
-                <button onClick={confirm} className="btn-pink mt-8 w-full sm:w-auto">
+                <button onClick={confirm} disabled={submitting || !user} className="btn-pink mt-8 w-full sm:w-auto disabled:opacity-40">
                   <span>Confirmer la réservation</span>
                 </button>
               </div>
@@ -260,7 +302,7 @@ function Booking() {
               <Row label="Durée totale" value={totalDuration ? `${totalDuration} min` : "—"} />
               <Row
                 label="Date"
-                value={date ? `${date.toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}${slot ? ` · ${slot}` : ""}` : "—"}
+                value={selectedSlot ? new Date(selectedSlot.starts_at).toLocaleString("fr-FR", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" }) : "—"}
               />
               <Row label="Ambiance" value={vibes.length ? vibes.map((id) => VIBES_RDV.find((v) => v.id === id)?.title).join(", ") : "—"} />
             </div>

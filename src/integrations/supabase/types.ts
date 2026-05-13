@@ -14,6 +14,101 @@ export type Database = {
   }
   public: {
     Tables: {
+      appointments: {
+        Row: {
+          created_at: string
+          deposit_paid: boolean
+          duration_minutes: number
+          id: string
+          notes: string | null
+          options: Json
+          service_id: string
+          service_name: string
+          slot_id: string | null
+          starts_at: string
+          status: string
+          total_price: number
+          updated_at: string
+          user_id: string
+          vibe: string | null
+        }
+        Insert: {
+          created_at?: string
+          deposit_paid?: boolean
+          duration_minutes: number
+          id?: string
+          notes?: string | null
+          options?: Json
+          service_id: string
+          service_name: string
+          slot_id?: string | null
+          starts_at: string
+          status?: string
+          total_price?: number
+          updated_at?: string
+          user_id: string
+          vibe?: string | null
+        }
+        Update: {
+          created_at?: string
+          deposit_paid?: boolean
+          duration_minutes?: number
+          id?: string
+          notes?: string | null
+          options?: Json
+          service_id?: string
+          service_name?: string
+          slot_id?: string | null
+          starts_at?: string
+          status?: string
+          total_price?: number
+          updated_at?: string
+          user_id?: string
+          vibe?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_slot_id_fkey"
+            columns: ["slot_id"]
+            isOneToOne: false
+            referencedRelation: "slots"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      gallery_items: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string
+          name: string
+          published: boolean
+          sort_order: number
+          vibe: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url: string
+          name: string
+          published?: boolean
+          sort_order?: number
+          vibe: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string
+          name?: string
+          published?: boolean
+          sort_order?: number
+          vibe?: string
+        }
+        Relationships: []
+      }
       moodboard_items: {
         Row: {
           created_at: string
@@ -65,15 +160,66 @@ export type Database = {
         }
         Relationships: []
       }
+      slots: {
+        Row: {
+          created_at: string
+          duration_minutes: number
+          id: string
+          starts_at: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          starts_at: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          starts_at?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "client"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -200,6 +346,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "client"],
+    },
   },
 } as const

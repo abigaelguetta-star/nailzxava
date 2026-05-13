@@ -1,10 +1,16 @@
 import { Heart } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { type Pose } from "@/lib/poses";
 import { useMoodboard } from "@/lib/moodboard";
 
+interface PoseLike {
+  id: string;
+  name: string;
+  vibe: string;
+  image: string;
+}
+
 interface Props {
-  pose: Pose;
+  pose: PoseLike;
   showActions?: boolean;
 }
 

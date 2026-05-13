@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth";
 import { useMoodboard } from "@/lib/moodboard";
+import { supabase } from "@/integrations/supabase/client";
 import { PoseCard } from "@/components/PoseCard";
 import { Heart, Sparkles, Calendar, BookOpen } from "lucide-react";
 
@@ -14,15 +16,26 @@ export const Route = createFileRoute("/portal")({
   }),
 });
 
-// Mock data
-const MOCK_RDV = [
-  { id: 1, date: "12 mai 2026", service: "Pose gel + nail art", time: "14:00", duration: 90, vibe: "🎵 R&B / Hip-hop", status: "À venir" as const },
-  { id: 2, date: "8 avr 2026", service: "Pose gel complète", time: "11:00", duration: 60, vibe: "🤫 Mode silence", status: "Terminé" as const },
-];
+interface Appt {
+  id: string;
+  starts_at: string;
+  service_name: string;
+  duration_minutes: number;
+  vibe: string | null;
+  status: string;
+}
 
 function Portal() {
   const { user, profile, loading } = useAuth();
   const { liked } = useMoodboard();
+  const [appts, setAppts] = useState<Appt[]>([]);
+
+  useEffect(() => {
+    if (!user) return;
+    supabase.from("appointments").select("id,starts_at,service_name,duration_minutes,vibe,status")
+      .eq("user_id", user.id).order("starts_at", { ascending: false })
+      .then(({ data }) => setAppts((data || []) as Appt[]));
+  }, [user]);
 
   if (loading) {
     return <div className="min-h-[60vh] grid place-items-center"><p className="eyebrow">Chargement...</p></div>;
@@ -43,7 +56,7 @@ function Portal() {
     );
   }
 
-  const points = MOCK_RDV.filter((r) => r.status === "Terminé").length;
+  const points = appts.filter((r) => r.status === "done").length;
   const remaining = Math.max(0, 5 - (points % 5));
 
   return (
@@ -91,23 +104,31 @@ function Portal() {
               <p className="eyebrow">Mes rendez-vous</p>
             </div>
             <div className="space-y-3">
-              {MOCK_RDV.map((r) => (
-                <div
-                  key={r.id}
-                  className={`p-5 bg-surface border-l-2 ${r.status === "À venir" ? "border-l-primary" : "border-l-border"} border-y border-r border-border`}
-                >
-                  <div className="flex items-baseline justify-between flex-wrap gap-3">
-                    <div>
-                      <p className="font-display text-xl">{r.service}</p>
-                      <p className="text-xs text-muted-foreground mt-1 uppercase tracking-[0.16em]">
-                        {r.date} · {r.time} · {r.duration} min
-                      </p>
+              {appts.length === 0 && (
+                <p className="text-muted-foreground italic font-display text-xl">Pas encore de RDV. <Link to="/booking" className="text-primary link-underline">Réserver →</Link></p>
+              )}
+              {appts.map((r) => {
+                const upcoming = new Date(r.starts_at) > new Date() && r.status !== "cancelled";
+                const dt = new Date(r.starts_at);
+                const statusLabel = r.status === "confirmed" ? "Confirmé" : r.status === "pending" ? "En attente" : r.status === "done" ? "Terminé" : r.status === "cancelled" ? "Annulé" : r.status;
+                return (
+                  <div
+                    key={r.id}
+                    className={`p-5 bg-surface border-l-2 ${upcoming ? "border-l-primary" : "border-l-border"} border-y border-r border-border`}
+                  >
+                    <div className="flex items-baseline justify-between flex-wrap gap-3">
+                      <div>
+                        <p className="font-display text-xl">{r.service_name}</p>
+                        <p className="text-xs text-muted-foreground mt-1 uppercase tracking-[0.16em]">
+                          {dt.toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })} · {dt.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })} · {r.duration_minutes} min
+                        </p>
+                      </div>
+                      <span className={`pill !cursor-default ${upcoming ? "active" : ""}`}>{statusLabel}</span>
                     </div>
-                    <span className={`pill !cursor-default ${r.status === "À venir" ? "active" : ""}`}>{r.status}</span>
+                    {r.vibe && <p className="text-sm text-muted-foreground mt-3 italic">{r.vibe}</p>}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-3 italic">{r.vibe}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <Link to="/booking" className="btn-ghost mt-6 inline-block">+ Nouveau RDV</Link>
           </section>

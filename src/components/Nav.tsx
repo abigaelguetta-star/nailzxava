@@ -11,11 +11,14 @@ const NAV = [
   { to: "/portal", label: "Mon Portal" },
 ] as const;
 
+const ADMIN_NAV = { to: "/admin", label: "Admin" } as const;
+
 export function Nav() {
   const { theme, toggle } = useTheme();
-  const { user, profile, signOut } = useAuth();
+  const { user, profile, isAdmin, signOut } = useAuth();
   const [authOpen, setAuthOpen] = useState(false);
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const navItems = isAdmin ? [...NAV, ADMIN_NAV] : NAV;
 
   return (
     <>
@@ -26,7 +29,7 @@ export function Nav() {
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            {NAV.map((n) => (
+            {navItems.map((n) => (
               <Link
                 key={n.to}
                 to={n.to}
