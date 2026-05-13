@@ -302,7 +302,7 @@ function Booking() {
               <Row label="Durée totale" value={totalDuration ? `${totalDuration} min` : "—"} />
               <Row
                 label="Date"
-                value={date ? `${date.toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}${slot ? ` · ${slot}` : ""}` : "—"}
+                value={selectedSlot ? new Date(selectedSlot.starts_at).toLocaleString("fr-FR", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" }) : "—"}
               />
               <Row label="Ambiance" value={vibes.length ? vibes.map((id) => VIBES_RDV.find((v) => v.id === id)?.title).join(", ") : "—"} />
             </div>
