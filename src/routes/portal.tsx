@@ -28,6 +28,14 @@ interface Appt {
 function Portal() {
   const { user, profile, loading } = useAuth();
   const { liked } = useMoodboard();
+  const [appts, setAppts] = useState<Appt[]>([]);
+
+  useEffect(() => {
+    if (!user) return;
+    supabase.from("appointments").select("id,starts_at,service_name,duration_minutes,vibe,status")
+      .eq("user_id", user.id).order("starts_at", { ascending: false })
+      .then(({ data }) => setAppts((data || []) as Appt[]));
+  }, [user]);
 
   if (loading) {
     return <div className="min-h-[60vh] grid place-items-center"><p className="eyebrow">Chargement...</p></div>;
@@ -48,7 +56,7 @@ function Portal() {
     );
   }
 
-  const points = MOCK_RDV.filter((r) => r.status === "Terminé").length;
+  const points = appts.filter((r) => r.status === "done").length;
   const remaining = Math.max(0, 5 - (points % 5));
 
   return (
