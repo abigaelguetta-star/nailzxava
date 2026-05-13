@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { SERVICES, ADDONS, VIBES_RDV } from "@/lib/poses";
 import { useAuth } from "@/lib/auth";
+import { supabase } from "@/integrations/supabase/client";
 import { Check, Calendar as CalIcon } from "lucide-react";
 import { toast } from "sonner";
 
@@ -17,45 +18,78 @@ export const Route = createFileRoute("/booking")({
 
 const STEPS = ["Prestation", "Options", "Créneau", "Ambiance", "Confirmation"];
 
-// Mock disponibilités: certains jours du mois courant
-const TODAY = new Date();
-const AVAILABLE_DAYS = [3, 4, 6, 10, 11, 13, 17, 18, 20, 24, 25, 27].map((d) => {
-  const dt = new Date(TODAY.getFullYear(), TODAY.getMonth(), d);
-  return dt > TODAY ? dt : new Date(TODAY.getFullYear(), TODAY.getMonth() + 1, d);
-});
-const SLOTS = ["10:00", "11:30", "14:00", "15:30", "17:00"];
-const TAKEN: Record<string, string[]> = {};
+interface SlotRow { id: string; starts_at: string; duration_minutes: number; status: string }
 
 function Booking() {
   const { user } = useAuth();
   const [step, setStep] = useState(0);
   const [serviceId, setServiceId] = useState<string | null>(null);
   const [addonIds, setAddonIds] = useState<string[]>([]);
-  const [date, setDate] = useState<Date | null>(null);
-  const [slot, setSlot] = useState<string | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<SlotRow | null>(null);
   const [vibes, setVibes] = useState<string[]>([]);
+  const [slots, setSlots] = useState<SlotRow[]>([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [isNewClient, setIsNewClient] = useState(true);
+
+  useEffect(() => {
+    supabase.from("slots").select("*").eq("status", "open").gte("starts_at", new Date().toISOString())
+      .order("starts_at", { ascending: true })
+      .then(({ data }) => setSlots((data || []) as SlotRow[]));
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    supabase.from("appointments").select("id", { count: "exact", head: true }).eq("user_id", user.id)
+      .then(({ count }) => setIsNewClient((count ?? 0) === 0));
+  }, [user]);
 
   const service = SERVICES.find((s) => s.id === serviceId);
   const addons = ADDONS.filter((a) => addonIds.includes(a.id));
   const totalDuration = (service?.duration || 0) + addons.reduce((s, a) => s + a.duration, 0);
   const totalPrice = (service?.price || 0) + addons.reduce((s, a) => s + a.price, 0);
   const deposit = Math.round(totalPrice * 0.3);
-  const isNewClient = true; // mock — would come from user RDV history
+
+  // Group slots by day
+  const slotsByDay = useMemo(() => {
+    const map = new Map<string, SlotRow[]>();
+    for (const s of slots) {
+      const d = new Date(s.starts_at).toDateString();
+      if (!map.has(d)) map.set(d, []);
+      map.get(d)!.push(s);
+    }
+    return map;
+  }, [slots]);
+  const days = Array.from(slotsByDay.keys()).map((d) => new Date(d));
+  const [activeDay, setActiveDay] = useState<string | null>(null);
 
   const canNext = useMemo(() => {
     if (step === 0) return !!serviceId;
     if (step === 1) return true;
-    if (step === 2) return !!date && !!slot;
+    if (step === 2) return !!selectedSlot;
     if (step === 3) return vibes.length > 0;
     return true;
-  }, [step, serviceId, date, slot, vibes]);
+  }, [step, serviceId, selectedSlot, vibes]);
 
-  const confirm = () => {
-    if (!user) {
-      toast.error("Connecte-toi pour confirmer ta réservation.");
-      return;
-    }
+  const confirm = async () => {
+    if (!user) { toast.error("Connecte-toi pour confirmer ta réservation."); return; }
+    if (!service || !selectedSlot) return;
+    setSubmitting(true);
+    const { error } = await supabase.from("appointments").insert({
+      user_id: user.id,
+      slot_id: selectedSlot.id,
+      service_id: service.id,
+      service_name: service.name,
+      options: addons.map((a) => ({ id: a.id, name: a.name, price: a.price })),
+      starts_at: selectedSlot.starts_at,
+      duration_minutes: totalDuration,
+      total_price: totalPrice,
+      vibe: vibes.map((id) => VIBES_RDV.find((v) => v.id === id)?.title).filter(Boolean).join(" · "),
+      status: "pending",
+    });
+    setSubmitting(false);
+    if (error) { toast.error(error.message); return; }
     toast.success("Réservation enregistrée. À très vite ♥");
+    setStep(0); setServiceId(null); setAddonIds([]); setSelectedSlot(null); setVibes([]);
   };
 
   return (
