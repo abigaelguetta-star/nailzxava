@@ -57,7 +57,7 @@ export function useMoodboard() {
     }
   };
 
-  const toggle = useCallback(async (pose: Pick<Pose, "id" | "name" | "vibe" | "image">) => {
+  const toggle = useCallback(async (pose: { id: string; name: string; vibe: string; image: string }) => {
     const isLiked = likedIds.has(pose.id);
     const next = new Set(likedIds);
     if (isLiked) next.delete(pose.id); else next.add(pose.id);
