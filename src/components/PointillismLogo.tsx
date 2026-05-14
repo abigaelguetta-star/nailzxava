@@ -43,19 +43,19 @@ export function PointillismLogo({ height = 180 }: { height?: number }) {
       off.height = h;
       const octx = off.getContext("2d")!;
       // Fit font size to width
-      let fontSize = Math.floor(h * 0.78);
-      octx.font = `700 ${fontSize}px "Bebas Neue", Impact, sans-serif`;
+      let fontSize = Math.floor(h * 0.92);
+      const fontStack = `900 ${fontSize}px "Playfair Display", "Bodoni Moda", Bodoni, Georgia, serif`;
+      octx.font = fontStack;
       let metrics = octx.measureText(TEXT);
       const maxW = w * 0.96;
       if (metrics.width > maxW) {
         fontSize = Math.floor((fontSize * maxW) / metrics.width);
-        octx.font = `700 ${fontSize}px "Bebas Neue", Impact, sans-serif`;
+        octx.font = `900 ${fontSize}px "Playfair Display", "Bodoni Moda", Bodoni, Georgia, serif`;
         metrics = octx.measureText(TEXT);
       }
       octx.fillStyle = "#fff";
       octx.textBaseline = "middle";
       octx.textAlign = "center";
-      octx.letterSpacing = "0.04em" as unknown as string;
       octx.fillText(TEXT, w / 2, h / 2);
 
       const img = octx.getImageData(0, 0, w, h).data;
