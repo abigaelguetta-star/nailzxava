@@ -139,8 +139,8 @@ export function PointillismLogo({ height = 180 }: { height?: number }) {
       buildParticles();
       tick();
     };
-    if (document.fonts && (document as Document).fonts.ready) {
-      (document as Document).fonts.ready.then(start);
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(start);
     } else {
       start();
     }
