@@ -45,11 +45,8 @@ function Index() {
             Bienvenue dans l'univers NAILZXAVA, où l'onglerie devient une pièce d'archive.
             Entre luxe brut et esthétique cinématographique, nous sculptons votre identité
             jusqu'au bout des doigts. Ici, chaque pose est un manifeste de confiance,
-            un mélange de chrome liquide et de glamour sauvage.
-            <br />
-            <span className="not-italic font-body text-sm uppercase tracking-[0.32em] text-primary mt-4 inline-block">
-              Redéfinissez votre allure — affirmez votre vibe.
-            </span>
+            un mélange de chrome liquide et de glamour sauvage. Redéfinissez votre allure,
+            affirmez votre vibe : l'art de la baddie, élevé au rang d'icône.
           </p>
 
           {/* Hand menu */}
