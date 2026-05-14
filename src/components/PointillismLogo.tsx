@@ -11,7 +11,7 @@ type Particle = {
   r: number;
 };
 
-const TEXT = "NAILZXAVA";
+const TEXT = "NAILZxAVA";
 
 export function PointillismLogo({ height = 180 }: { height?: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
