@@ -511,3 +511,111 @@
 /* Hover scale */
 .hover-lift { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
 .hover-lift:hover { transform: translateY(-4px); }
+
+/* ============================================
+   YOU PORTAL — Glass + Chrome
+   ============================================ */
+.glass-card {
+  background: linear-gradient(135deg, oklch(0.94 0.018 80 / 0.06), oklch(0.94 0.018 80 / 0.02));
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid transparent;
+  border-image: linear-gradient(135deg,
+    oklch(0.95 0.02 80 / 0.6),
+    oklch(0.7 0.05 60 / 0.3),
+    oklch(0.85 0.04 80 / 0.5),
+    oklch(0.55 0.04 30 / 0.2)) 1;
+  position: relative;
+}
+.glass-card::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 30%, oklch(0.95 0.02 80 / 0.08) 50%, transparent 70%);
+  pointer-events: none;
+}
+
+.input-archive {
+  width: 100%;
+  background: oklch(0.12 0.008 30 / 0.5);
+  border: 0.5px solid oklch(0.78 0.08 80 / 0.35);
+  color: var(--cream);
+  padding: 0.85rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+.input-archive:focus {
+  outline: none;
+  border-color: oklch(0.85 0.12 80 / 0.8);
+  box-shadow: 0 0 0 1px oklch(0.85 0.12 80 / 0.4), 0 0 24px oklch(0.85 0.12 80 / 0.15);
+}
+.input-archive::placeholder { color: oklch(0.94 0.018 80 / 0.3); }
+
+.btn-chrome {
+  position: relative;
+  background: linear-gradient(180deg,
+    oklch(0.88 0.02 80) 0%,
+    oklch(0.65 0.02 80) 50%,
+    oklch(0.78 0.02 80) 100%);
+  color: var(--ink);
+  padding: 0.95rem 2rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border: 0.5px solid oklch(0.95 0.02 80 / 0.6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+.btn-chrome:hover {
+  box-shadow: 0 0 32px oklch(0.85 0.05 80 / 0.5), inset 0 1px 0 oklch(1 0 0 / 0.3);
+  transform: translateY(-1px);
+}
+.btn-chrome:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.error-neon {
+  color: oklch(0.7 0.3 25);
+  text-shadow: 0 0 12px oklch(0.7 0.3 25 / 0.6);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+.vibe-pill {
+  padding: 1.2rem 1.5rem;
+  border: 0.5px solid var(--color-border);
+  background: oklch(0.14 0.008 30 / 0.6);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  font-family: var(--font-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  border-radius: 2px;
+}
+.vibe-pill:hover { border-color: oklch(0.85 0.12 80 / 0.6); }
+.vibe-pill.selected {
+  background: linear-gradient(135deg, oklch(0.85 0.12 80 / 0.15), oklch(0.65 0.04 30 / 0.1));
+  border-color: oklch(0.85 0.12 80);
+  box-shadow: 0 0 24px oklch(0.85 0.12 80 / 0.2);
+  color: oklch(0.92 0.06 80);
+}
+
+.loyalty-bar {
+  height: 8px;
+  background: oklch(0.18 0.008 30);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+.loyalty-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink), oklch(0.75 0.3 350));
+  box-shadow: 0 0 16px oklch(0.62 0.28 0 / 0.6);
+  border-radius: 999px;
+  transition: width 1s cubic-bezier(0.77, 0, 0.175, 1);
+}
