@@ -2,10 +2,17 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
-interface Profile {
+export interface Profile {
   id: string;
   first_name: string | null;
+  last_name: string | null;
   email: string | null;
+  vibe: string | null;
+  nail_shape: string | null;
+  nail_length: string | null;
+  allergies: string | null;
+  instagram: string | null;
+  onboarded: boolean;
 }
 
 interface AuthCtx {
@@ -15,8 +22,9 @@ interface AuthCtx {
   isAdmin: boolean;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
-  signUp: (email: string, password: string, firstName: string) => Promise<{ error?: string }>;
+  signUp: (email: string, password: string) => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
+  refreshProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthCtx | undefined>(undefined);
