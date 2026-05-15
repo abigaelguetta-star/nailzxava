@@ -13,7 +13,6 @@ export function AuthModal({ open, onOpenChange }: Props) {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
   const [busy, setBusy] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
@@ -24,7 +23,7 @@ export function AuthModal({ open, onOpenChange }: Props) {
       if (error) toast.error(error);
       else { toast.success("Bienvenue ♥"); onOpenChange(false); }
     } else {
-      const { error } = await signUp(email, password, firstName);
+      const { error } = await signUp(email, password);
       if (error) toast.error(error);
       else { toast.success("Compte créé. Tu peux te connecter."); setMode("signin"); }
     }
