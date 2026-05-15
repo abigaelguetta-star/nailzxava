@@ -36,11 +36,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const loadUserData = (uid: string) => {
-    supabase.from("profiles").select("*").eq("id", uid).maybeSingle()
-      .then(({ data }) => setProfile(data as Profile | null));
-    supabase.from("user_roles").select("role").eq("user_id", uid).eq("role", "admin").maybeSingle()
-      .then(({ data }) => setIsAdmin(!!data));
+  const loadUserData = async (uid: string) => {
+    const { data } = await supabase.from("profiles").select("*").eq("id", uid).maybeSingle();
+    setProfile(data as Profile | null);
+    const { data: r } = await supabase.from("user_roles").select("role").eq("user_id", uid).eq("role", "admin").maybeSingle();
+    setIsAdmin(!!r);
   };
 
   useEffect(() => {
@@ -70,15 +70,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: error?.message };
   };
 
-  const signUp = async (email: string, password: string, firstName: string) => {
-    const redirectUrl = `${window.location.origin}/`;
+  const signUp = async (email: string, password: string) => {
+    const redirectUrl = `${window.location.origin}/portal`;
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        emailRedirectTo: redirectUrl,
-        data: { first_name: firstName },
-      },
+      options: { emailRedirectTo: redirectUrl },
     });
     return { error: error?.message };
   };
@@ -87,9 +84,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signOut();
   };
 
+  const refreshProfile = async () => {
+    if (user) await loadUserData(user.id);
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, session, profile, isAdmin, loading, signIn, signUp, signOut }}
+      value={{ user, session, profile, isAdmin, loading, signIn, signUp, signOut, refreshProfile }}
     >
       {children}
     </AuthContext.Provider>
