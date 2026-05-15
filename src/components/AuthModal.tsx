@@ -60,17 +60,6 @@ export function AuthModal({ open, onOpenChange }: Props) {
         </div>
 
         <form onSubmit={submit} className="p-8 space-y-4">
-          {mode === "signup" && (
-            <div>
-              <label className="eyebrow block mb-2">Prénom</label>
-              <input
-                required
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className="w-full bg-transparent border-b border-border py-2 text-foreground focus:border-primary focus:outline-none transition-colors"
-              />
-            </div>
-          )}
           <div>
             <label className="eyebrow block mb-2">Email</label>
             <input
