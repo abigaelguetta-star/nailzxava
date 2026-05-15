@@ -13,7 +13,6 @@ export function AuthModal({ open, onOpenChange }: Props) {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
   const [busy, setBusy] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
@@ -24,7 +23,7 @@ export function AuthModal({ open, onOpenChange }: Props) {
       if (error) toast.error(error);
       else { toast.success("Bienvenue ♥"); onOpenChange(false); }
     } else {
-      const { error } = await signUp(email, password, firstName);
+      const { error } = await signUp(email, password);
       if (error) toast.error(error);
       else { toast.success("Compte créé. Tu peux te connecter."); setMode("signin"); }
     }
@@ -61,17 +60,6 @@ export function AuthModal({ open, onOpenChange }: Props) {
         </div>
 
         <form onSubmit={submit} className="p-8 space-y-4">
-          {mode === "signup" && (
-            <div>
-              <label className="eyebrow block mb-2">Prénom</label>
-              <input
-                required
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className="w-full bg-transparent border-b border-border py-2 text-foreground focus:border-primary focus:outline-none transition-colors"
-              />
-            </div>
-          )}
           <div>
             <label className="eyebrow block mb-2">Email</label>
             <input
