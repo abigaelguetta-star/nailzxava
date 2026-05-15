@@ -141,22 +141,43 @@ export type Database = {
       }
       profiles: {
         Row: {
+          allergies: string | null
           created_at: string
           email: string | null
           first_name: string | null
           id: string
+          instagram: string | null
+          last_name: string | null
+          nail_length: string | null
+          nail_shape: string | null
+          onboarded: boolean
+          vibe: string | null
         }
         Insert: {
+          allergies?: string | null
           created_at?: string
           email?: string | null
           first_name?: string | null
           id: string
+          instagram?: string | null
+          last_name?: string | null
+          nail_length?: string | null
+          nail_shape?: string | null
+          onboarded?: boolean
+          vibe?: string | null
         }
         Update: {
+          allergies?: string | null
           created_at?: string
           email?: string | null
           first_name?: string | null
           id?: string
+          instagram?: string | null
+          last_name?: string | null
+          nail_length?: string | null
+          nail_shape?: string | null
+          onboarded?: boolean
+          vibe?: string | null
         }
         Relationships: []
       }
