@@ -83,6 +83,15 @@ function Index() {
         </div>
       </section>
 
+      {/* À PROPOS */}
+      <section className="relative bg-background border-t border-border">
+        <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 py-24">
+          <p className="eyebrow">— À propos</p>
+          <p className="mt-8 max-w-3xl font-display text-2xl md:text-3xl leading-relaxed text-foreground/90">
+            Je fais du nail art depuis 1 an et demi. J'aime particulièrement les poses qui sortent de l'ordinaire : ongles asymétriques, effets 3D, jeux de couleurs et de strass.
+          </p>
+        </div>
+
       {/* BOOKING PREVIEW */}
       <section className="relative bg-surface border-y border-border">
         <div className="bg-decor-text -top-8 right-0 text-right" aria-hidden>
