@@ -33,17 +33,17 @@ export const POSES: Pose[] = [
 ];
 
 export const SERVICES = [
-  { id: "s1", name: "Pose gel complète", duration: 60, price: 45 },
-  { id: "s2", name: "Pose gel + nail art", duration: 90, price: 65 },
-  { id: "s3", name: "Remplissage gel", duration: 45, price: 35 },
+  { id: "sp-couleur", name: "Semi permanent — Couleur simple", duration: 180, price: 20 },
+  { id: "sp-art-simple", name: "Semi permanent — Nail art simple", duration: 180, price: 25 },
+  { id: "sp-art-medium", name: "Semi permanent — Nail art medium", duration: 180, price: 30 },
+  { id: "sp-art-avancee", name: "Semi permanent — Nail art avancée", duration: 180, price: 35 },
+  { id: "gx-couleur", name: "Gel-X / pose américaine — Couleur simple", duration: 180, price: 30 },
+  { id: "gx-art-simple", name: "Gel-X / pose américaine — Nail art simple", duration: 180, price: 35 },
+  { id: "gx-art-medium", name: "Gel-X / pose américaine — Nail art medium", duration: 180, price: 40 },
+  { id: "gx-art-avancee", name: "Gel-X / pose américaine — Nail art avancée", duration: 180, price: 45 },
 ];
 
-export const ADDONS = [
-  { id: "a1", name: "Dépose ancienne pose", duration: 15, price: 10 },
-  { id: "a2", name: "Nail art complexe", duration: 30, price: 20 },
-  { id: "a3", name: "Réparation ongle", duration: 10, price: 5 },
-  { id: "a4", name: "French / ombre", duration: 20, price: 12 },
-];
+export const ADDONS: { id: string; name: string; duration: number; price: number }[] = [];
 
 export const VIBES_RDV = [
   { id: "silence", emoji: "🤫", title: "Mode silence", sub: "Je veux me reposer" },
