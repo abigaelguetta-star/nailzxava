@@ -107,13 +107,13 @@ function Index() {
               Réserve ton <span className="italic text-primary">moment</span>.
             </h2>
             <p className="text-muted-foreground mt-6 max-w-md">
-              5 étapes. Choisis ta prestation, tes options, ton créneau et l'ambiance de ton RDV.
+              Toutes les prestations durent 3h. Réserve directement par DM Instagram.
             </p>
-            <Link to="/booking" className="inline-block mt-8">
+            <a href="https://www.instagram.com/nailzxava/" target="_blank" rel="noreferrer" className="inline-block mt-8">
               <button className="btn-pink">
-                <span>Commencer</span>
+                <span>Prendre RDV</span>
               </button>
-            </Link>
+            </a>
           </div>
           <div className="md:col-span-7 space-y-px">
             {SERVICES.map((s, i) => (

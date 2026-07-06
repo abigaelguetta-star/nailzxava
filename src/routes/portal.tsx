@@ -288,7 +288,7 @@ function Dashboard({ onSignOut, onRefresh }: { onSignOut: () => Promise<void>; o
             ) : (
               <>
                 <p className="font-display text-2xl mt-4 italic text-muted-foreground">Aucun RDV à l'horizon.</p>
-                <Link to="/booking" className="btn-chrome mt-6 inline-block">Réserver maintenant</Link>
+                <a href="https://www.instagram.com/nailzxava/" target="_blank" rel="noreferrer" className="btn-chrome mt-6 inline-block">Réserver maintenant</a>
               </>
             )}
           </section>

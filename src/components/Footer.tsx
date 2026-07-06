@@ -10,9 +10,27 @@ export function Footer() {
             Editorial nails · By appointment
           </p>
         </div>
-        <div className="md:text-center">
+        <div className="md:text-center space-y-2">
           <p className="eyebrow">Contact</p>
-          <p className="font-display text-xl italic mt-2">@nailzxava</p>
+          <a
+            href="https://www.instagram.com/nailzxava/"
+            target="_blank"
+            rel="noreferrer"
+            className="block font-display text-xl italic mt-2 text-foreground hover:text-primary transition-colors"
+          >
+            @nailzxava
+          </a>
+          <a
+            href="https://www.tiktok.com/@nailzxava"
+            target="_blank"
+            rel="noreferrer"
+            className="block text-sm text-muted-foreground hover:text-primary transition-colors"
+          >
+            TikTok
+          </a>
+          <p className="text-xs text-muted-foreground mt-2">
+            12e arrondissement, Paris — proche métro Cour Saint-Émilion (ligne 14)
+          </p>
         </div>
         <div className="md:text-right">
           <p className="eyebrow">© 2026</p>
