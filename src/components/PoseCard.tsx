@@ -1,5 +1,4 @@
 import { Heart } from "lucide-react";
-import { Link } from "@tanstack/react-router";
 import { useMoodboard } from "@/lib/moodboard";
 
 interface PoseLike {
@@ -34,11 +33,16 @@ export function PoseCard({ pose, showActions = true }: Props) {
         <p className="eyebrow text-cream/70">{pose.vibe}</p>
         <p className="font-display text-2xl italic mt-1 text-cream">{pose.name}</p>
         {showActions && (
-          <Link to="/booking" className="mt-4 inline-block">
+          <a
+            href="https://www.instagram.com/nailzxava/"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-4 inline-block"
+          >
             <button className="btn-outline-pink !border-cream/40 !text-cream hover:!bg-primary hover:!border-primary">
               Réserver ce style →
             </button>
-          </Link>
+          </a>
         )}
       </div>
     </div>
