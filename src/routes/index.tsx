@@ -91,6 +91,9 @@ function Index() {
             Je fais du nail art depuis 1 an et demi. J'aime particulièrement les poses qui sortent de l'ordinaire : ongles asymétriques, effets 3D, jeux de couleurs et de strass.
           </p>
         </div>
+      </section>
+
+
 
       {/* BOOKING PREVIEW */}
       <section className="relative bg-surface border-y border-border">
