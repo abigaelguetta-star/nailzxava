@@ -9,7 +9,7 @@ const NAV = [
   { to: "/", label: "Home", icon: "home" },
   { to: "/selector", label: "Explore" },
   { to: "/booking", label: "Booking" },
-  { to: "/guide", label: "Guide" },
+  { to: "/aftercare", label: "Guide" },
 ] as const;
 
 const ADMIN_NAV = { to: "/admin", label: "Admin" } as const;
