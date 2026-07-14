@@ -21,7 +21,7 @@ const TIPS = [
   {
     num: "02",
     title: "Elles sont solides,\nmais c'est pas des outils",
-    text: "Je fais des poses qui tiennent — mes clientes font du sport, leur vie, sans problème. Mais forcer une serrure ou gratter une surface dure en répétition, c'est chercher les ennuis. Un peu de bon sens et ça dure.",
+    text: "Je fais des poses qui tiennent : mes clientes font du sport, leur vie, sans problème. Mais forcer une serrure ou gratter une surface dure en répétition, c'est chercher les ennuis. Un peu de bon sens et ça dure.",
     side: "right",
     doodle: "hammer",
   },
@@ -42,7 +42,7 @@ const TIPS = [
   {
     num: "05",
     title: "En cas de casse,\nne tire pas",
-    text: "Je sais que le réflexe c'est d'arranger ça soi-même — mais arracher un gel abîme l'ongle naturel en dessous. Envoie-moi un DM, on règle ça en réparation rapide.",
+    text: "Je sais que le réflexe c'est d'arranger ça soi-même. Mais arracher un gel abîme l'ongle naturel en dessous! Envoie-moi un DM, on règle ça en réparation rapide.",
     side: "left",
     doodle: "phone",
   },
