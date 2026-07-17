@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useMemo, useEffect } from "react";
-import { POSES, VIBES } from "@/lib/poses";
+import { POSES } from "@/lib/poses";
 import { PoseCard } from "@/components/PoseCard";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/selector")({
   head: () => ({
     meta: [
       { title: "Nail Selector — nailzxava" },
-      { name: "description", content: "Galerie éditoriale des créations d'Ava. Filtre par forme, longueur et technique pour trouver l'inspiration." },
+      { name: "description", content: "Galerie éditoriale des créations d'Ava. Filtre par technique, forme et longueur pour composer ton style." },
     ],
   }),
 });
@@ -17,8 +17,25 @@ export const Route = createFileRoute("/selector")({
 interface DisplayPose { id: string; name: string; vibe: string; image: string }
 
 function Selector() {
-  const [active, setActive] = useState<string>("Tout");
   const [dbItems, setDbItems] = useState<DisplayPose[]>([]);
+
+  // 3 états distincts pour gérer notre entonnoir de filtrage
+  const [tech, setTech] = useState<"Tout" | "Gel-X" | "Semi-permanent">("Tout");
+  const [forme, setForme] = useState<"Tout" | "Amande" | "Carré">("Tout");
+  const [longueur, setLongueur] = useState<"Tout" | "court" | "medium" | "long">("Tout");
+
+  // Réinitialise les sous-filtres si on change de technique
+  const handleTechChange = (newTech: "Tout" | "Gel-X" | "Semi-permanent") => {
+    setTech(newTech);
+    setForme("Tout");
+    setLongueur("Tout");
+  };
+
+  // Réinitialise la longueur si on change de forme
+  const handleFormeChange = (newForme: "Tout" | "Amande" | "Carré") => {
+    setForme(newForme);
+    setLongueur("Tout");
+  };
 
   useEffect(() => {
     supabase.from("gallery_items").select("id,name,vibe,image_url").eq("published", true)
@@ -33,10 +50,25 @@ function Selector() {
     return [...dbItems, ...fromStatic];
   }, [dbItems]);
 
-  const filtered = useMemo(
-    () => active === "Tout" ? all : all.filter((p) => p.vibe === active),
-    [active, all]
-  );
+  // Logique de filtrage "intelligent" par étapes sur la chaîne (ex: "Amande court - Gel-X")
+  const filtered = useMemo(() => {
+    return all.filter((p) => {
+      const v = p.vibe.toLowerCase();
+      
+      // 1. Filtrer par technique
+      if (tech === "Gel-X" && !v.includes("gel-x")) return false;
+      if (tech === "Semi-permanent" && !v.includes("semi-permanent")) return false;
+      
+      // 2. Filtrer par forme
+      if (forme === "Amande" && !v.includes("amande")) return false;
+      if (forme === "Carré" && !v.includes("carré")) return false;
+      
+      // 3. Filtrer par longueur
+      if (longueur !== "Tout" && !v.includes(longueur)) return false;
+
+      return true;
+    });
+  }, [tech, forme, longueur, all]);
 
   return (
     <div className="relative">
@@ -48,31 +80,67 @@ function Selector() {
           Pick your <span className="headline-italic">poison</span>.
         </h1>
         <p className="text-muted-foreground max-w-md mt-6">
-          Chaque pose est une création unique. Like ce qui t'inspire pour le retrouver dans ton moodboard.
+          Chaque pose est une création unique. Filtre selon tes envies et enregistre tes préférées.
         </p>
 
-        {/* La liste de boutons affiche maintenant "Amande court - Gel-X", etc. */}
-        <div className="flex flex-wrap gap-2 mt-12 no-scrollbar overflow-x-auto">
-          <button onClick={() => setActive("Tout")} className={`pill ${active === "Tout" ? "active" : ""}`}>
-            Tout
-          </button>
-          {VIBES.map((v) => (
-            <button key={v} onClick={() => setActive(v)} className={`pill ${active === v ? "active" : ""}`}>
-              {v}
+        {/* --- ÉTAPE 1 : LA TECHNIQUE --- */}
+        <div className="space-y-4 mt-12">
+          <div className="flex flex-wrap gap-2">
+            <button onClick={() => handleTechChange("Tout")} className={`pill ${tech === "Tout" ? "active" : ""}`}>
+              Tout voir
             </button>
-          ))}
+            <button onClick={() => handleTechChange("Gel-X")} className={`pill ${tech === "Gel-X" ? "active" : ""}`}>
+              Gel-X
+            </button>
+            <button onClick={() => handleTechChange("Semi-permanent")} className={`pill ${tech === "Semi-permanent" ? "active" : ""}`}>
+              Semi-Permanent
+            </button>
+          </div>
+
+          {/* --- ÉTAPE 2 : LA FORME (Seulement si Gel-X ou Semi est sélectionné) --- */}
+          {tech !== "Tout" && (
+            <div className="flex flex-wrap gap-2 pt-2 border-t border-border/40 animate-fade-in">
+              <button onClick={() => handleFormeChange("Tout")} className={`pill text-xs ${forme === "Tout" ? "active" : ""}`}>
+                Toutes les formes
+              </button>
+              <button onClick={() => handleFormeChange("Amande")} className={`pill text-xs ${forme === "Amande" ? "active" : ""}`}>
+                Amande
+              </button>
+              <button onClick={() => handleFormeChange("Carré")} className={`pill text-xs ${forme === "Carré" ? "active" : ""}`}>
+                Carré
+              </button>
+            </div>
+          )}
+
+          {/* --- ÉTAPE 3 : LA LONGUEUR (Seulement si une forme précise est sélectionnée) --- */}
+          {tech !== "Tout" && forme !== "Tout" && (
+            <div className="flex flex-wrap gap-2 pt-2 border-t border-border/40 animate-fade-in">
+              <button onClick={() => setLongueur("Tout")} className={`pill text-xs ${longueur === "Tout" ? "active" : ""}`}>
+                Toutes les longueurs
+              </button>
+              <button onClick={() => setLongueur("court")} className={`pill text-xs ${longueur === "court" ? "active" : ""}`}>
+                Court
+              </button>
+              <button onClick={() => setLongueur("medium")} className={`pill text-xs ${longueur === "medium" ? "active" : ""}`}>
+                Medium
+              </button>
+              <button onClick={() => setLongueur("long")} className={`pill text-xs ${longueur === "long" ? "active" : ""}`}>
+                Long
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
+      {/* --- GRILLE DE RÉSULTATS --- */}
       <div className="max-w-[1600px] mx-auto px-6 md:px-10 mt-12 pb-24">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[3px]">
           {filtered.map((p) => <PoseCard key={p.id} pose={p} />)}
         </div>
         
-        {/* Changement du message ici si aucune photo ne correspond */}
         {filtered.length === 0 && (
           <p className="text-center text-muted-foreground py-24 font-display text-2xl italic">
-            Aucune photo disponible pour cette option... pour l'instant.
+            Aucune photo ne correspond à ces critères... pour l'instant.
           </p>
         )}
       </div>
