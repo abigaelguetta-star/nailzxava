@@ -1,12 +1,12 @@
-import camoPiercing from "@/assets/camopiercing.jpg";
-import cyberOrchid from "@/assets/cyberorchid.jpg";
-import gothicOcean from "@/assets/gothicocean.jpg";
-import silverCatEye from "@/assets/silvercateye.jpg";
-import spiderPunk from "@/assets/spiderpunk.jpg";
-import wildOrchid from "@/assets/wildorchid.jpg";
-import abyssalGlow from "@/assets/abyssalglow.jpg";
-import baroqueJewelry from "@/assets/baroquejewelry.jpg";
-import gothCoquette from "@/assets/gothcoquette.jpg";
+import camoPiercing from "@/assets/camopiercing.png";
+import cyberOrchid from "@/assets/cyberorchid.png";
+import gothicOcean from "@/assets/gothicocean.png";
+import silverCatEye from "@/assets/silvercateye.png";
+import spiderPunk from "@/assets/spiderpunk.png";
+import wildOrchid from "@/assets/wildorchid.png";
+import abyssalGlow from "@/assets/abyssalglow.png";
+import baroqueJewelry from "@/assets/baroquejewelry.png";
+import gothCoquette from "@/assets/gothcoquette.png";
 
 export type Vibe = 
   | "Amande court - Gel-X"
