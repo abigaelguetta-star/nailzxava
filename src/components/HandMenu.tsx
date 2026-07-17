@@ -19,37 +19,42 @@ export function HandMenu({ onHome }: { onHome: () => void }) {
   const [hovered, setHovered] = useState<string | null>(null);
 
   const zones: Zone[] = [
-    {
-      id: "home",
-      label: "HOME",
-      left: "5%", top: "8%", width: "16%", height: "28%",
-      action: onHome,
-    },
-    {
-      id: "explore",
-      label: "EXPLORE",
-      left: "24%", top: "2%", width: "16%", height: "32%",
-      action: () => navigate({ to: "/selector" }),
-    },
-    {
-      id: "booking",
-      label: "BOOKING",
-      left: "43%", top: "0%", width: "17%", height: "35%",
-      action: () => navigate({ to: "/booking" }),
-    },
-    {
-      id: "guide",
-      label: "GUIDE",
-      left: "61%", top: "5%", width: "17%", height: "33%",
-      action: () => navigate({ to: "/aftercare" }),
-    },
-    {
-      id: "you",
-      label: "YOU",
-      left: "75%", top: "52%", width: "22%", height: "30%",
-      action: () => navigate({ to: "/portal" }),
-    },
-  ];
+  {
+    id: "home",
+    label: "HOME",
+    // auriculaire — cheetah, penché à gauche
+    left: "3%", top: "6%", width: "14%", height: "26%",
+    action: onHome,
+  },
+  {
+    id: "explore",
+    label: "EXPLORE",
+    // index — chrome noir, 2ème doigt
+    left: "19%", top: "1%", width: "15%", height: "30%",
+    action: () => navigate({ to: "/selector" }),
+  },
+  {
+    id: "booking",
+    label: "BOOKING",
+    // majeur — aura violet, centre
+    left: "35%", top: "0%", width: "16%", height: "33%",
+    action: () => navigate({ to: "/booking" }),
+  },
+  {
+    id: "guide",
+    label: "GUIDE",
+    // annulaire — ombre rose/étoile
+    left: "51%", top: "3%", width: "15%", height: "30%",
+    action: () => navigate({ to: "/aftercare" }),
+  },
+  {
+    id: "you",
+    label: "YOU",
+    // pouce — french rose/noir, bas droite
+    left: "68%", top: "48%", width: "20%", height: "28%",
+    action: () => navigate({ to: "/portal" }),
+  },
+];
 
   return (
     <div className="relative w-full max-w-[480px] mx-auto select-none">
