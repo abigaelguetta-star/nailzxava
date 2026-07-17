@@ -1,3 +1,4 @@
+import * as React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/aftercare")({
@@ -142,7 +143,7 @@ function DoodlePhone() {
   );
 }
 
-const DOODLES: Record<string, () => JSX.Element> = {
+const DOODLES: Record<string, () => React.ReactElement> = {
   drops: DoodleDrops,
   hammer: DoodleHammer,
   tape: DoodleTape,
