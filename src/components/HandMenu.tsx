@@ -1,16 +1,16 @@
 import { useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import handImg from "@/assets/ChatGPT_Image_13_juil._2026_à_23_25_55-removebg-preview.png";
 
-type Finger = {
+type Zone = {
   id: string;
   label: string;
-  // finger base x position, height (length), nail position
-  baseX: number;
-  topY: number;
-  bottomY: number;
-  width: number;
-  rotate: number;
+  // position en % sur l'image
+  left: string;
+  top: string;
+  width: string;
+  height: string;
   action: () => void;
 };
 
@@ -18,140 +18,101 @@ export function HandMenu({ onHome }: { onHome: () => void }) {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState<string | null>(null);
 
-  const fingers: Finger[] = [
-    // pouce (à gauche, plus court, incliné)
-    { id: "home", label: "HOME", baseX: 60, topY: 220, bottomY: 360, width: 46, rotate: -32, action: onHome },
-    // index
-    { id: "explore", label: "EXPLORE", baseX: 155, topY: 70, bottomY: 320, width: 42, rotate: -8, action: () => navigate({ to: "/selector" }) },
-    // majeur (le plus long)
-    { id: "booking", label: "BOOKING", baseX: 230, topY: 40, bottomY: 320, width: 44, rotate: 0, action: () => navigate({ to: "/booking" }) },
-    // annulaire
-    { id: "you", label: "YOU", baseX: 305, topY: 70, bottomY: 320, width: 42, rotate: 6, action: () => navigate({ to: "/portal" }) },
-    // auriculaire
-    { id: "guide", label: "GUIDE", baseX: 372, topY: 130, bottomY: 320, width: 36, rotate: 14, action: () => navigate({ to: "/aftercare" }) },
+  const zones: Zone[] = [
+    {
+      id: "home",
+      label: "HOME",
+      // auriculaire — tout à gauche
+      left: "2%", top: "3%", width: "17%", height: "35%",
+      action: onHome,
+    },
+    {
+      id: "explore",
+      label: "EXPLORE",
+      // index
+      left: "20%", top: "0%", width: "18%", height: "40%",
+      action: () => navigate({ to: "/selector" }),
+    },
+    {
+      id: "booking",
+      label: "BOOKING",
+      // majeur
+      left: "38%", top: "0%", width: "18%", height: "43%",
+      action: () => navigate({ to: "/booking" }),
+    },
+    {
+      id: "guide",
+      label: "GUIDE",
+      // annulaire
+      left: "56%", top: "3%", width: "18%", height: "40%",
+      action: () => navigate({ to: "/aftercare" }),
+    },
+    {
+      id: "you",
+      label: "YOU",
+      // pouce — en bas à droite
+      left: "72%", top: "40%", width: "26%", height: "38%",
+      action: () => navigate({ to: "/portal" }),
+    },
   ];
 
   return (
-    <div className="relative w-full max-w-[520px] mx-auto select-none">
-      <svg
-        viewBox="0 0 460 540"
-        className="w-full h-auto overflow-visible"
+    <div className="relative w-full max-w-[480px] mx-auto select-none">
+      {/* Image de la main détourée */}
+      <img
+        src={handImg}
+        alt="Main nailzxava"
+        className="w-full h-auto"
+        draggable={false}
         style={{ filter: "drop-shadow(0 30px 50px rgba(0,0,0,0.5))" }}
-      >
-        <defs>
-          <linearGradient id="skinGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="oklch(0.32 0.02 30)" />
-            <stop offset="100%" stopColor="oklch(0.18 0.012 30)" />
-          </linearGradient>
-          <linearGradient id="nailGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="oklch(0.78 0.04 30)" />
-            <stop offset="100%" stopColor="oklch(0.55 0.04 30)" />
-          </linearGradient>
-          <radialGradient id="palmGrad" cx="0.5" cy="0.4" r="0.7">
-            <stop offset="0%" stopColor="oklch(0.34 0.02 30)" />
-            <stop offset="100%" stopColor="oklch(0.16 0.012 30)" />
-          </radialGradient>
-          <filter id="nailGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="6" result="b" />
-            <feMerge>
-              <feMergeNode in="b" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
+      />
 
-        {/* paume */}
-        <path
-          d="M 70 330 Q 50 380 80 460 Q 130 520 230 525 Q 330 520 380 460 Q 410 380 390 330 Z"
-          fill="url(#palmGrad)"
-          stroke="oklch(0.94 0.018 80 / 0.08)"
-          strokeWidth="0.5"
-        />
+      {/* Zones cliquables par-dessus chaque ongle */}
+      {zones.map((z) => (
+        <div
+          key={z.id}
+          className="absolute group"
+          style={{
+            left: z.left,
+            top: z.top,
+            width: z.width,
+            height: z.height,
+            cursor: "none",
+          }}
+          onMouseEnter={() => setHovered(z.id)}
+          onMouseLeave={() => setHovered(null)}
+          onClick={z.action}
+        >
+          {/* Glow rose au hover */}
+          <div
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"
+            style={{
+              background: "radial-gradient(ellipse at 50% 30%, rgba(255,0,102,0.4) 0%, transparent 70%)",
+              mixBlendMode: "screen",
+            }}
+          />
+        </div>
+      ))}
 
-        {/* doigts */}
-        {fingers.map((f) => {
-          const cx = f.baseX + f.width / 2;
-          const fingerHeight = f.bottomY - f.topY;
-          const isHover = hovered === f.id;
-          return (
-            <g
-              key={f.id}
-              transform={`rotate(${f.rotate} ${cx} ${f.bottomY})`}
-              style={{ cursor: "pointer" }}
-              onMouseEnter={() => setHovered(f.id)}
-              onMouseLeave={() => setHovered(null)}
-              onClick={f.action}
-            >
-              {/* doigt */}
-              <rect
-                x={f.baseX}
-                y={f.topY}
-                width={f.width}
-                height={fingerHeight}
-                rx={f.width / 2}
-                fill="url(#skinGrad)"
-                stroke="oklch(0.94 0.018 80 / 0.06)"
-                strokeWidth="0.5"
-              />
-              {/* phalange ligne */}
-              <line
-                x1={f.baseX + 6}
-                x2={f.baseX + f.width - 6}
-                y1={f.topY + fingerHeight * 0.45}
-                y2={f.topY + fingerHeight * 0.45}
-                stroke="oklch(0.94 0.018 80 / 0.08)"
-                strokeWidth="0.5"
-              />
-              {/* ongle */}
-              <ellipse
-                cx={cx}
-                cy={f.topY + 18}
-                rx={f.width * 0.42}
-                ry={22}
-                fill={isHover ? "var(--pink)" : "url(#nailGrad)"}
-                filter={isHover ? "url(#nailGlow)" : undefined}
-                style={{ transition: "fill 0.3s ease" }}
-              />
-              {/* reflet */}
-              <ellipse
-                cx={cx - 4}
-                cy={f.topY + 12}
-                rx={f.width * 0.18}
-                ry={6}
-                fill="oklch(0.96 0.02 80 / 0.6)"
-              />
-              {/* hitbox transparente plus large */}
-              <rect
-                x={f.baseX - 6}
-                y={f.topY - 18}
-                width={f.width + 12}
-                height={fingerHeight + 18}
-                fill="transparent"
-              />
-            </g>
-          );
-        })}
-      </svg>
-
-      {/* tooltips */}
+      {/* Tooltips au-dessus des doigts */}
       <AnimatePresence>
-        {fingers.map((f) =>
-          hovered === f.id ? (
+        {zones.map((z) =>
+          hovered === z.id ? (
             <motion.div
-              key={f.id}
+              key={z.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               transition={{ duration: 0.25, ease: [0.77, 0, 0.175, 1] }}
               className="pointer-events-none absolute"
               style={{
-                left: `${((f.baseX + f.width / 2) / 460) * 100}%`,
-                top: `${((f.topY - 30) / 540) * 100}%`,
-                transform: "translate(-50%, -100%)",
+                left: `calc(${z.left} + calc(${z.width} / 2))`,
+                top: z.top,
+                transform: "translate(-50%, -110%)",
               }}
             >
               <div className="font-condensed text-primary text-xl tracking-[0.32em] whitespace-nowrap">
-                {f.label}
+                {z.label}
               </div>
               <div className="h-px w-8 bg-primary mx-auto mt-1" />
             </motion.div>
