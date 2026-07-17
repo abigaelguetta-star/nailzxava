@@ -22,36 +22,31 @@ export function HandMenu({ onHome }: { onHome: () => void }) {
     {
       id: "home",
       label: "HOME",
-      // auriculaire — tout à gauche
-      left: "2%", top: "3%", width: "17%", height: "35%",
+      left: "5%", top: "8%", width: "16%", height: "28%",
       action: onHome,
     },
     {
       id: "explore",
       label: "EXPLORE",
-      // index
-      left: "20%", top: "0%", width: "18%", height: "40%",
+      left: "24%", top: "2%", width: "16%", height: "32%",
       action: () => navigate({ to: "/selector" }),
     },
     {
       id: "booking",
       label: "BOOKING",
-      // majeur
-      left: "38%", top: "0%", width: "18%", height: "43%",
+      left: "43%", top: "0%", width: "17%", height: "35%",
       action: () => navigate({ to: "/booking" }),
     },
     {
       id: "guide",
       label: "GUIDE",
-      // annulaire
-      left: "56%", top: "3%", width: "18%", height: "40%",
+      left: "61%", top: "5%", width: "17%", height: "33%",
       action: () => navigate({ to: "/aftercare" }),
     },
     {
       id: "you",
       label: "YOU",
-      // pouce — en bas à droite
-      left: "72%", top: "40%", width: "26%", height: "38%",
+      left: "75%", top: "52%", width: "22%", height: "30%",
       action: () => navigate({ to: "/portal" }),
     },
   ];
