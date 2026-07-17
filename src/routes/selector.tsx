@@ -50,7 +50,7 @@ function Selector() {
     return [...dbItems, ...fromStatic];
   }, [dbItems]);
 
-  // Logique de filtrage "intelligent" par étapes sur la chaîne (ex: "Amande court - Gel-X")
+  // Logique de filtrage par étapes sur la chaîne (ex: "Amande court - Gel-X")
   const filtered = useMemo(() => {
     return all.filter((p) => {
       const v = p.vibe.toLowerCase();
@@ -59,12 +59,12 @@ function Selector() {
       if (tech === "Gel-X" && !v.includes("gel-x")) return false;
       if (tech === "Semi-permanent" && !v.includes("semi-permanent")) return false;
       
-      // 2. Filtrer par forme
-      if (forme === "Amande" && !v.includes("amande")) return false;
-      if (forme === "Carré" && !v.includes("carré")) return false;
+      // 2. Filtrer par forme (uniquement si Gel-X)
+      if (tech === "Gel-X" && forme === "Amande" && !v.includes("amande")) return false;
+      if (tech === "Gel-X" && forme === "Carré" && !v.includes("carré")) return false;
       
-      // 3. Filtrer par longueur
-      if (longueur !== "Tout" && !v.includes(longueur)) return false;
+      // 3. Filtrer par longueur (uniquement si Gel-X)
+      if (tech === "Gel-X" && longueur !== "Tout" && !v.includes(longueur)) return false;
 
       return true;
     });
@@ -97,8 +97,8 @@ function Selector() {
             </button>
           </div>
 
-          {/* --- ÉTAPE 2 : LA FORME (Seulement si Gel-X ou Semi est sélectionné) --- */}
-          {tech !== "Tout" && (
+          {/* --- ÉTAPE 2 : LA FORME (UNIQUEMENT POUR GEL-X) --- */}
+          {tech === "Gel-X" && (
             <div className="flex flex-wrap gap-2 pt-2 border-t border-border/40 animate-fade-in">
               <button onClick={() => handleFormeChange("Tout")} className={`pill text-xs ${forme === "Tout" ? "active" : ""}`}>
                 Toutes les formes
@@ -112,8 +112,8 @@ function Selector() {
             </div>
           )}
 
-          {/* --- ÉTAPE 3 : LA LONGUEUR (Seulement si une forme précise est sélectionnée) --- */}
-          {tech !== "Tout" && forme !== "Tout" && (
+          {/* --- ÉTAPE 3 : LA LONGUEUR (UNIQUEMENT POUR GEL-X SI UNE FORME EST CHOISIE) --- */}
+          {tech === "Gel-X" && forme !== "Tout" && (
             <div className="flex flex-wrap gap-2 pt-2 border-t border-border/40 animate-fade-in">
               <button onClick={() => setLongueur("Tout")} className={`pill text-xs ${longueur === "Tout" ? "active" : ""}`}>
                 Toutes les longueurs
