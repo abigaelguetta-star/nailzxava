@@ -5,7 +5,19 @@ import nailRed from "@/assets/nail-red.jpg";
 import nailGlam from "@/assets/nail-glam.jpg";
 import nailBaddie from "@/assets/nail-baddie.jpg";
 
-export type Vibe = "Full Glam" | "Cyber Y2K" | "Quiet Luxury" | "Baddie Pack" | "Dark" | "Chrome";
+export type Vibe = 
+  | "Amande court - Gel-X"
+  | "Amande medium - Gel-X"
+  | "Amande long - Gel-X"
+  | "Carré court - Gel-X"
+  | "Carré medium - Gel-X"
+  | "Carré long - Gel-X"
+  | "Amande court - Semi-permanent"
+  | "Amande medium - Semi-permanent"
+  | "Amande long - Semi-permanent"
+  | "Carré court - Semi-permanent"
+  | "Carré medium - Semi-permanent"
+  | "Carré long - Semi-permanent";
 
 export interface Pose {
   id: string;
@@ -15,7 +27,20 @@ export interface Pose {
   image: string;
 }
 
-export const VIBES: Vibe[] = ["Full Glam", "Cyber Y2K", "Quiet Luxury", "Baddie Pack", "Dark", "Chrome"];
+export const VIBES = [
+  "Amande court - Gel-X",
+  "Amande medium - Gel-X",
+  "Amande long - Gel-X",
+  "Carré court - Gel-X",
+  "Carré medium - Gel-X",
+  "Carré long - Gel-X",
+  "Amande court - Semi-permanent",
+  "Amande medium - Semi-permanent",
+  "Amande long - Semi-permanent",
+  "Carré court - Semi-permanent",
+  "Carré medium - Semi-permanent",
+  "Carré long - Semi-permanent"
+];
 
 export const POSES: Pose[] = [
   { id: "p1", name: "Liquid Mirror", vibe: "Chrome", colors: ["Silver", "Dark"], image: nailChrome },
@@ -33,14 +58,21 @@ export const POSES: Pose[] = [
 ];
 
 export const SERVICES = [
-  { id: "sp-couleur", name: "Semi permanent — Couleur simple", duration: 180, price: 20 },
-  { id: "sp-art-simple", name: "Semi permanent — Nail art simple", duration: 180, price: 25 },
-  { id: "sp-art-medium", name: "Semi permanent — Nail art medium", duration: 180, price: 30 },
-  { id: "sp-art-avancee", name: "Semi permanent — Nail art avancée", duration: 180, price: 35 },
-  { id: "gx-couleur", name: "Gel-X / pose américaine — Couleur simple", duration: 180, price: 30 },
-  { id: "gx-art-simple", name: "Gel-X / pose américaine — Nail art simple", duration: 180, price: 35 },
-  { id: "gx-art-medium", name: "Gel-X / pose américaine — Nail art medium", duration: 180, price: 40 },
-  { id: "gx-art-avancee", name: "Gel-X / pose américaine — Nail art avancée", duration: 180, price: 45 },
+  // --- Semi-permanent ---
+  { id: "sp-couleur", name: "Semi permanent — Couleur simple", duration: 40, price: 20 },
+  { id: "sp-art-simple", name: "Semi permanent — Nail art simple (Niveau 1)", duration: 50, price: 25 },
+  { id: "sp-art-medium", name: "Semi permanent — Nail art medium (Niveau 2)", duration: 70, price: 30 }, // 1h10 = 70 min
+  { id: "sp-art-avancee", name: "Semi permanent — Nail art avancée (Niveau 3)", duration: 90, price: 35 }, // 1h30 = 90 min
+
+  // --- Gel-X / Pose Américaine ---
+  { id: "gx-couleur", name: "Gel-X / pose américaine — Couleur simple", duration: 60, price: 30 }, // 1h = 60 min
+  { id: "gx-art-simple", name: "Gel-X / pose américaine — Nail art simple (Niveau 1)", duration: 90, price: 35 }, // 1h30 = 90 min
+  { id: "gx-art-medium", name: "Gel-X / pose américaine — Nail art medium (Niveau 2)", duration: 120, price: 40 }, // 2h = 120 min
+  { id: "gx-art-avancee", name: "Gel-X / pose américaine — Nail art avancée (Niveau 3)", duration: 150, price: 45 }, // 2h30 = 150 min
+
+  // --- Déposes ---
+  { id: "depose-sp", name: "Dépose — Semi permanent seuls", duration: 30, price: 5 },
+  { id: "depose-fo", name: "Dépose — Faux ongles (Gel-X / Capsules)", duration: 60, price: 10 }, // 1h = 60 min
 ];
 
 export const ADDONS: { id: string; name: string; duration: number; price: number }[] = [];
