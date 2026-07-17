@@ -142,7 +142,7 @@ function DoodlePhone() {
   );
 }
 
-const DOODLES: Record<string, () => JSX.Element> = {
+const DOODLES: Record<string, () => React.ReactElement> = {
   drops: DoodleDrops,
   hammer: DoodleHammer,
   tape: DoodleTape,
