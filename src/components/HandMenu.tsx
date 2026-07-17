@@ -1,7 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import handImg from "@/assets/ChatGPT_Image_13_juil._2026_à_23_25_55-removebg-preview.png";
+import handImg from "@/assets/hand.png";
 
 type Zone = {
   id: string;
