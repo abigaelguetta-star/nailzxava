@@ -1,9 +1,12 @@
-import nailChrome from "@/assets/nail-chrome.jpg";
-import nailDark from "@/assets/nail-dark.jpg";
-import nailCyber from "@/assets/nail-cyber.jpg";
-import nailRed from "@/assets/nail-red.jpg";
-import nailGlam from "@/assets/nail-glam.jpg";
-import nailBaddie from "@/assets/nail-baddie.jpg";
+import camoPiercing from "@/assets/camo_piercing.jpg";
+import cyberOrchid from "@/assets/cyber_orchid.jpg";
+import gothicOcean from "@/assets/gothic_ocean.jpg";
+import silverCatEye from "@/assets/silver_cateye.jpg";
+import spiderPunk from "@/assets/spider_punk.jpg";
+import wildOrchid from "@/assets/wild_orchid.jpg";
+import abyssalGlow from "@/assets/abyssal_glow.jpg";
+import baroqueJewelry from "@/assets/baroque_jewelry.jpg";
+import gothCoquette from "@/assets/goth_coquette.jpg";
 
 export type Vibe = 
   | "Amande court - Gel-X"
@@ -27,7 +30,7 @@ export interface Pose {
   image: string;
 }
 
-export const VIBES = [
+export const VIBES: Vibe[] = [
   "Amande court - Gel-X",
   "Amande medium - Gel-X",
   "Amande long - Gel-X",
@@ -43,20 +46,70 @@ export const VIBES = [
 ];
 
 export const POSES: Pose[] = [
-  { id: "p1", name: "Liquid Mirror", vibe: "Chrome", colors: ["Silver", "Dark"], image: nailChrome },
-  { id: "p2", name: "Black Widow", vibe: "Dark", colors: ["Black"], image: nailDark },
-  { id: "p3", name: "Y2K Princess", vibe: "Cyber Y2K", colors: ["Pink", "Holo"], image: nailCyber },
-  { id: "p4", name: "Cherry Noir", vibe: "Dark", colors: ["Red"], image: nailRed },
-  { id: "p5", name: "Crystal Empire", vibe: "Full Glam", colors: ["Crystal"], image: nailGlam },
-  { id: "p6", name: "Wild Cat", vibe: "Baddie Pack", colors: ["Brown", "Animal"], image: nailBaddie },
-  { id: "p7", name: "Midnight Chrome", vibe: "Chrome", colors: ["Silver"], image: nailChrome },
-  { id: "p8", name: "Stiletto Soul", vibe: "Dark", colors: ["Black"], image: nailDark },
-  { id: "p9", name: "Holo Dream", vibe: "Cyber Y2K", colors: ["Holo", "Pink"], image: nailCyber },
-  { id: "p10", name: "Tarantino Red", vibe: "Full Glam", colors: ["Red"], image: nailRed },
-  { id: "p11", name: "Diamond Rain", vibe: "Full Glam", colors: ["Crystal"], image: nailGlam },
-  { id: "p12", name: "Leopard Queen", vibe: "Baddie Pack", colors: ["Animal"], image: nailBaddie },
+  { 
+    id: "p1", 
+    name: "Camo Piercing", 
+    vibe: "Carré long - Gel-X", 
+    colors: ["Green", "Silver", "White", "Kaki"], 
+    image: camoPiercing 
+  },
+  { 
+    id: "p2", 
+    name: "Cyber Orchid", 
+    vibe: "Amande long - Gel-X", 
+    colors: ["Purple", "Black", "Silver", "White"], 
+    image: cyberOrchid 
+  },
+  { 
+    id: "p3", 
+    name: "Gothic Ocean", 
+    vibe: "Carré long - Gel-X", 
+    colors: ["Silver", "Pink", "White", "Black"], 
+    image: gothicOcean 
+  },
+  { 
+    id: "p4", 
+    name: "Silver Cat Eye", 
+    vibe: "Amande medium - Gel-X", 
+    colors: ["Silver", "Pink", "Cat Eye"], 
+    image: silverCatEye 
+  },
+  { 
+    id: "p5", 
+    name: "Spider Punk", 
+    vibe: "Amande long - Gel-X", 
+    colors: ["Black", "Multicolor", "Silver"], 
+    image: spiderPunk 
+  },
+  { 
+    id: "p6", 
+    name: "Wild Orchid", 
+    vibe: "Amande medium - Gel-X", 
+    colors: ["Purple", "Burgundy", "Pink"], 
+    image: wildOrchid 
+  },
+  { 
+    id: "p7", 
+    name: "Abyssal Glow", 
+    vibe: "Amande long - Gel-X", 
+    colors: ["Multicolor", "Kaki", "Orange", "Blue"], 
+    image: abyssalGlow 
+  },
+  { 
+    id: "p8", 
+    name: "Baroque Jewelry", 
+    vibe: "Amande long - Gel-X", 
+    colors: ["Gold", "Silver", "White", "Pearl"], 
+    image: baroqueJewelry 
+  },
+  { 
+    id: "p9", 
+    name: "Goth Coquette", 
+    vibe: "Amande long - Gel-X", 
+    colors: ["Black", "Pink", "Purple", "White"], 
+    image: gothCoquette 
+  }
 ];
-
 export const SERVICES = [
   // --- Semi-permanent ---
   { id: "sp-couleur", name: "Semi permanent — Couleur simple", duration: 40, price: 20 },
