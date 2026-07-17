@@ -9,7 +9,7 @@ export const Route = createFileRoute("/selector")({
   head: () => ({
     meta: [
       { title: "Nail Selector — nailzxava" },
-      { name: "description", content: "Galerie éditoriale des créations d'Ava. Filtre par vibe et sauvegarde tes préférées." },
+      { name: "description", content: "Galerie éditoriale des créations d'Ava. Filtre par forme, longueur et technique pour trouver l'inspiration." },
     ],
   }),
 });
@@ -51,6 +51,7 @@ function Selector() {
           Chaque pose est une création unique. Like ce qui t'inspire pour le retrouver dans ton moodboard.
         </p>
 
+        {/* La liste de boutons affiche maintenant "Amande court - Gel-X", etc. */}
         <div className="flex flex-wrap gap-2 mt-12 no-scrollbar overflow-x-auto">
           <button onClick={() => setActive("Tout")} className={`pill ${active === "Tout" ? "active" : ""}`}>
             Tout
@@ -67,8 +68,12 @@ function Selector() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[3px]">
           {filtered.map((p) => <PoseCard key={p.id} pose={p} />)}
         </div>
+        
+        {/* Changement du message ici si aucune photo ne correspond */}
         {filtered.length === 0 && (
-          <p className="text-center text-muted-foreground py-24 font-display text-2xl italic">Rien dans cette vibe... encore.</p>
+          <p className="text-center text-muted-foreground py-24 font-display text-2xl italic">
+            Aucune photo disponible pour cette option... pour l'instant.
+          </p>
         )}
       </div>
     </div>
