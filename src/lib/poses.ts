@@ -189,7 +189,7 @@ export const POSES: Pose[] = [
   { 
     id: "p16", 
     name: "Digital Circus", 
-    vibe: "Amande medium - Gel-X", 
+    vibe: "Amande court - Gel-X", 
     colors: ["Purple", "Red", "Yellow", "Gold"], 
     image: digitalCircus
   },
@@ -210,7 +210,7 @@ export const POSES: Pose[] = [
   { 
     id: "p19", 
     name: "Burgundy Stars", 
-    vibe: "Amande medium - Gel-X", 
+    vibe: "Amande court - Gel-X", 
     colors: ["Bordeaux", "Chrome", "Nude"], 
     image: bordeauxStars
   },
@@ -308,28 +308,28 @@ export const POSES: Pose[] = [
   { 
     id: "p33", 
     name: "Dark Starlet", 
-    vibe: "Carré long - Gel-X", 
+    vibe: "Amande long - Gel-X", 
     colors: ["Black", "Silver", "Glitter"], 
     image: darkStarlet
   },
   { 
     id: "p34", 
     name: "Eight Ball Mix", 
-    vibe: "Amande medium - Gel-X", 
+    vibe: "Amande long - Gel-X", 
     colors: ["Black", "White", "Blue", "Green", "Brown"], 
     image: eightBallMix
   },
   { 
     id: "p35", 
     name: "Fashion Icons", 
-    vibe: "Carré medium - Gel-X", 
+    vibe: "Amande medium - Gel-X", 
     colors: ["Black", "White", "Red"], 
     image: fashionIcons
   },
   { 
     id: "p36", 
     name: "Minimalist Dots", 
-    vibe: "Amande medium - Gel-X", 
+    vibe: "Amande long - Gel-X", 
     colors: ["White", "Black", "Nude"], 
     image: minimalistDots
   },
@@ -357,14 +357,14 @@ export const POSES: Pose[] = [
   { 
     id: "p40", 
     name: "Retro Dot", 
-    vibe: "Amande court - Semi-permanent", 
+    vibe: "Amande court - Gel-X", 
     colors: ["Red", "White", "Nude"], 
     image: retroDot
   },
   { 
     id: "p41", 
     name: "Rose Chrome French", 
-    vibe: "Carré long - Gel-X", 
+    vibe: "Amande medium - Gel-X", 
     colors: ["Pink", "Chrome", "Silver"], 
     image: roseChromeFrench
   },
@@ -378,7 +378,7 @@ export const POSES: Pose[] = [
   { 
     id: "p43", 
     name: "Sea Coquette", 
-    vibe: "Carré long - Gel-X", 
+    vibe: "Amande medium - Gel-X", 
     colors: ["Blue", "White", "Glitter"], 
     image: seaCoquette
   },
