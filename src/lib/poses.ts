@@ -38,7 +38,7 @@ import pastelMix from "@/assets/pastelmix.png";
 import punkMix from "@/assets/punkmix.png";
 import reptileDot from "@/assets/reptiledot.png";
 import retroDot from "@/assets/retrodot.png";
-import rose ChromeFrench from "@/assets/rosechromefrench.png";
+import roseChromeFrench from "@/assets/rosechromefrench.png";
 import sakuraPearl from "@/assets/sakurapearl.png";
 import seaCoquette from "@/assets/seacoquette.png";
 import vinylCoraline from "@/assets/vinylcoraline.png";
