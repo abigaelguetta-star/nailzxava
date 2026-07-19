@@ -23,21 +23,6 @@ import cyberStar from "@/assets/cyberstar.png";
 import rubyFrench from "@/assets/rubyfrench.png";
 import laceSpiral from "@/assets/lacespiral.png";
 import viviennePink from "@/assets/viviennepink.png";
-import abstractBlueY2K from "@/assets/abstractbluey2k.png";
-import brownieY2K from "@/assets/browniey2k.png";
-import burgundyStarlet from "@/assets/burgundystarlet.png";
-import cyberPinkAura from "@/assets/cyberpinkaura.png";
-import cyberPopRed from "@/assets/cyberpopred.png";
-import darkBiomech from "@/assets/darkbiomech.png";
-import darkLaceBow from "@/assets/darklacebow.png";
-import darkStarlet from "@/assets/darkstarlet.png";
-import eightBallMix from "@/assets/eightballmix.png";
-import fashionIcons from "@/assets/fashionicons.png";
-import minimalistDots from "@/assets/minimalistdots.png";
-import pastelMix from "@/assets/pastelmix.png";
-import punkMix from "@/assets/punkmix.png";
-import reptileDot from "@/assets/reptiledot.png";
-import retroDot from "@/assets/retrodot.png";
 import roseChromeFrench from "@/assets/rosechromefrench.png";
 import sakuraPearl from "@/assets/sakurapearl.png";
 import seaCoquette from "@/assets/seacoquette.png";
@@ -255,111 +240,6 @@ export const POSES: Pose[] = [
     vibe: "Amande long - Gel-X", 
     colors: ["Pink", "White", "Silver", "Multicolor"], 
     image: viviennePink
-  },
-  { 
-    id: "p26", 
-    name: "Abstract Blue Y2K", 
-    vibe: "Amande long - Gel-X", 
-    colors: ["Blue", "White", "Black", "Chrome", "Silver"], 
-    image: abstractBlueY2K
-  },
-  { 
-    id: "p27", 
-    name: "Brownie Y2K", 
-    vibe: "Carré medium - Gel-X", 
-    colors: ["Brown", "Nude", "White"], 
-    image: brownieY2K
-  },
-  { 
-    id: "p28", 
-    name: "Burgundy Starlet", 
-    vibe: "Amande medium - Gel-X", 
-    colors: ["Bordeaux", "Silver", "Nude"], 
-    image: burgundyStarlet
-  },
-  { 
-    id: "p29", 
-    name: "Cyber Pink Aura", 
-    vibe: "Amande long - Gel-X", 
-    colors: ["Pink", "Magenta", "Silver", "Black"], 
-    image: cyberPinkAura
-  },
-  { 
-    id: "p30", 
-    name: "Cyber Pop Red", 
-    vibe: "Amande medium - Gel-X", 
-    colors: ["Red", "Pink", "Silver", "Chrome"], 
-    image: cyberPopRed
-  },
-  { 
-    id: "p31", 
-    name: "Dark Biomech", 
-    vibe: "Amande long - Gel-X", 
-    colors: ["Black", "Chrome", "Silver", "Grey"], 
-    image: darkBiomech
-  },
-  { 
-    id: "p32", 
-    name: "Dark Lace Bow", 
-    vibe: "Amande court - Semi-permanent", 
-    colors: ["Black", "Nude", "Gold"], 
-    image: darkLaceBow
-  },
-  { 
-    id: "p33", 
-    name: "Dark Starlet", 
-    vibe: "Carré long - Gel-X", 
-    colors: ["Black", "Silver", "Glitter"], 
-    image: darkStarlet
-  },
-  { 
-    id: "p34", 
-    name: "Eight Ball Mix", 
-    vibe: "Amande medium - Gel-X", 
-    colors: ["Black", "White", "Blue", "Green", "Brown"], 
-    image: eightBallMix
-  },
-  { 
-    id: "p35", 
-    name: "Fashion Icons", 
-    vibe: "Carré medium - Gel-X", 
-    colors: ["Black", "White", "Red"], 
-    image: fashionIcons
-  },
-  { 
-    id: "p36", 
-    name: "Minimalist Dots", 
-    vibe: "Amande medium - Gel-X", 
-    colors: ["White", "Black", "Nude"], 
-    image: minimalistDots
-  },
-  { 
-    id: "p37", 
-    name: "Pastel Mix", 
-    vibe: "Carré long - Gel-X", 
-    colors: ["Pink", "Blue", "Green", "Yellow", "Multicolor"], 
-    image: pastelMix
-  },
-  { 
-    id: "p38", 
-    name: "Punk Mix", 
-    vibe: "Amande court - Gel-X", 
-    colors: ["Green", "Pink", "Black", "Silver", "Multicolor"], 
-    image: punkMix
-  },
-  { 
-    id: "p39", 
-    name: "Reptile Dot", 
-    vibe: "Amande long - Gel-X", 
-    colors: ["Green", "Black", "Nude"], 
-    image: reptileDot
-  },
-  { 
-    id: "p40", 
-    name: "Retro Dot", 
-    vibe: "Amande court - Semi-permanent", 
-    colors: ["Red", "White", "Nude"], 
-    image: retroDot
   },
   { 
     id: "p41", 
