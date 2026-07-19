@@ -7,6 +7,22 @@ import wildOrchid from "@/assets/wildorchid.png";
 import abyssalGlow from "@/assets/abyssalglow.png";
 import baroqueJewelry from "@/assets/baroquejewelry.png";
 import gothCoquette from "@/assets/gothcoquette.png";
+import pinkhibiscus from "@/assets/pinkhibiscus.png";
+import lacePiercing from "@/assets/lacepiercing.png";
+import pinkgeodeCateye from "@/assets/pinkgeodecateye.png";
+import blobBaroque from "@/assets/blobbaroque.png";
+import kakiTartan from "@/assets/kakitartan.png";
+import glazedLemon from "@/assets/glazedlemon.png";
+import digitalCircus from "@/assets/digitalcircus.png";
+import bloomingFrench from "@/assets/bloomingfrench.png";
+import frenchCoquette from "@/assets/frenchcoquette.png";
+import bordeauxStars from "@/assets/bordeauxstars.png";
+import glitteryDaisy from "@/assets/glitterydaisy.png";
+import fullLace from "@/assets/fulllace.png";
+import cyberStar from "@/assets/cyberstar.png";
+import rubyFrench from "@/assets/rubyfrench.png";
+import laceSpiral from "@/assets/lacespiral.png";
+import viviennePink from "@/assets/viviennepink.png";
 
 export type Vibe = 
   | "Amande court - Gel-X"
@@ -108,7 +124,119 @@ export const POSES: Pose[] = [
     vibe: "Amande long - Gel-X", 
     colors: ["Black", "Pink", "Purple", "White"], 
     image: gothCoquette 
-  }
+  },
+  { 
+    id: "p10", 
+    name: "Pink Hibiscus", 
+    vibe: "Amande long - Gel-X", 
+    colors: ["Pink", "White", "Fuchsia"], 
+    image: pinkhibiscus
+  },
+  { 
+    id: "p11", 
+    name: "Lace Piercing", 
+    vibe: "Amande medium - Gel-X", 
+    colors: ["White", "Black", "Silver"], 
+    image: lacePiercing
+  },
+  { 
+    id: "p12", 
+    name: "Pink Geode", 
+    vibe: "Amande medium - Gel-X", 
+    colors: ["Gold", "Pink", "Cat Eye"], 
+    image: pinkgeodeCateye
+  },
+  { 
+    id: "p13", 
+    name: "Blob Baroque", 
+    vibe: "Amande long - Gel-X", 
+    colors: ["Pink", "Yellow", "Gold", "Silver", "Multicolor"], 
+    image: blobBaroque
+  },
+  { 
+    id: "p14", 
+    name: "Kaki Tartan", 
+    vibe: "Amande long - Gel-X", 
+    colors: ["Kaki", "Gold", "Silver", "White", "Black"], 
+    image: kakiTartan
+  },
+  { 
+    id: "p15", 
+    name: "Glazed Lemon", 
+    vibe: "Amande long - Gel-X", 
+    colors: ["Yellow", "White", "Chrome"], 
+    image: glazedLemon
+  },
+  { 
+    id: "p16", 
+    name: "Digital Circus", 
+    vibe: "Amande medium - Gel-X", 
+    colors: ["Purple", "Red", "Yellow", "Gold"], 
+    image: digitalCircus
+  },
+  { 
+    id: "p17", 
+    name: "Blooming French", 
+    vibe: "Amande court - Semi-permanent", 
+    colors: ["Yellow", "Red", "Pink"], 
+    image: bloomingFrench
+  },
+  { 
+    id: "p18", 
+    name: "French Coquette", 
+    vibe: "Amande court - Gel-X", 
+    colors: ["White", "Gold", "Nude"], 
+    image: frenchCoquette
+  },
+  { 
+    id: "p19", 
+    name: "Burgundy Stars", 
+    vibe: "Amande medium - Gel-X", 
+    colors: ["Bordeaux", "Chrome", "Nude"], 
+    image: bordeauxStars
+  },
+  { 
+    id: "p20", 
+    name: "Glittery Daisy", 
+    vibe: "Carré court - Gel-X", 
+    colors: ["White", "Pink", "Gold", "Glitter"], 
+    image: glitteryDaisy
+  },
+  { 
+    id: "p21", 
+    name: "Full Lace", 
+    vibe: "Amande long - Gel-X", 
+    colors: ["White", "Nude"], 
+    image: fullLace
+  },
+  { 
+    id: "p22", 
+    name: "Cyber Star", 
+    vibe: "Amande medium - Gel-X", 
+    colors: ["Pink", "White", "Silver", "Chrome"], 
+    image: cyberStar
+  },
+  { 
+    id: "p23", 
+    name: "Ruby French", 
+    vibe: "Amande medium - Gel-X", 
+    colors: ["Red", "White", "Nude"], 
+    image: rubyFrench
+  },
+  { 
+    id: "p24", 
+    name: "Lace Spiral", 
+    vibe: "Amande long - Gel-X", 
+    colors: ["White", "Silver", "Gold", "Blue"], 
+    image: laceSpiral
+  },
+  { 
+    id: "p25", 
+    name: "Vivienne Pink", 
+    vibe: "Amande long - Gel-X", 
+    colors: ["Pink", "White", "Silver", "Multicolor"], 
+    image: viviennePink
+  }  
 ];
 export const SERVICES = [
   // --- Semi-permanent ---
