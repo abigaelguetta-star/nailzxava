@@ -30,7 +30,7 @@ export function HandMenu({ onHome }: { onHome: () => void }) {
     id: "explore",
     label: "EXPLORE",
     // index — chrome noir, 2ème doigt
-    left: "19%", top: "1%", width: "15%", height: "30%",
+    left: "19%", top: "3%", width: "15%", height: "30%",
     action: () => navigate({ to: "/selector" }),
   },
   {
@@ -51,7 +51,7 @@ export function HandMenu({ onHome }: { onHome: () => void }) {
     id: "you",
     label: "YOU",
     // pouce — french rose/noir, bas droite
-    left: "68%", top: "48%", width: "20%", height: "28%",
+    left: "72%", top: "48%", width: "20%", height: "28%",
     action: () => navigate({ to: "/portal" }),
   },
 ];
