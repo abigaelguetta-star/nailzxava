@@ -18,7 +18,7 @@ export function Footer() {
             rel="noreferrer"
             className="block font-display text-xl italic mt-2 text-foreground hover:text-primary transition-colors"
           >
-            @nailzxava
+            instagram : @nailzxava
           </a>
           <a
             href="https://www.tiktok.com/@nailzxava"
@@ -29,7 +29,16 @@ export function Footer() {
             TikTok
           </a>
           <p className="text-xs text-muted-foreground mt-2">
-            12e arrondissement, Paris — proche métro Cour Saint-Émilion (ligne 14)
+            12e arrondissement, Paris — proche métro {" "}
+            <a
+              href="https://www.google.com/maps/place/Cour+Saint-%C3%89milion/@48.8336726,2.3835342,17z/data=!3m1!4b1!4m6!3m5!1s0x47e6723f862bd209:0x97f5211d39909f08!8m2!3d48.8336691!4d2.3861091!16zL20vMDJmYnQx?entry=ttu&g_ep=EgoyMDI2MDcyMS4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noreferrer"
+              className="underline hover:text-primary transition-colors"
+            >
+              Cour Saint-Emilion
+            </a>{" "}
+            (ligne 14)
           </p>
         </div>
         <div className="md:text-right">
