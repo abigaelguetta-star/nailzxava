@@ -23,7 +23,7 @@ export function HandMenu({ onHome }: { onHome: () => void }) {
     id: "home",
     label: "HOME",
     // auriculaire — cheetah, penché à gauche
-    left: "67%", top: "15%", width: "15%", height: "30%",
+    left: "67%", top: "12%", width: "15%", height: "30%",
     action: onHome,
   },
   {
@@ -37,7 +37,7 @@ export function HandMenu({ onHome }: { onHome: () => void }) {
     id: "booking",
     label: "BOOKING",
     // majeur — aura violet, centre
-    left: "35%", top: "0%", width: "16%", height: "30%",
+    left: "35%", top: "3%", width: "16%", height: "30%",
     action: () => navigate({ to: "/booking" }),
   },
   {
@@ -51,7 +51,7 @@ export function HandMenu({ onHome }: { onHome: () => void }) {
     id: "you",
     label: "YOU",
     // pouce — french rose/noir, bas droite
-    left: "76%", top: "48%", width: "20%", height: "28%",
+    left: "76%", top: "51%", width: "20%", height: "28%",
     action: () => navigate({ to: "/portal" }),
   },
 ];
