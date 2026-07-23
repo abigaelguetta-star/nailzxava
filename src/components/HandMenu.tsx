@@ -23,14 +23,14 @@ export function HandMenu({ onHome }: { onHome: () => void }) {
     id: "home",
     label: "HOME",
     // auriculaire — cheetah, penché à gauche
-    left: "65%", top: "0%", width: "15%", height: "30%",
+    left: "65%", top: "0%", width: "15%", height: "20%",
     action: onHome,
   },
   {
     id: "explore",
     label: "EXPLORE",
     // index — chrome noir, 2ème doigt
-    left: "19%", top: "3%", width: "15%", height: "30%",
+    left: "19%", top: "3%", width: "15%", height: "20%",
     action: () => navigate({ to: "/selector" }),
   },
   {
