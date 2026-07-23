@@ -1,10 +1,15 @@
 const ITEMS = [
   "Nail Art",
   "Full Glam",
-  "Pose Gel",
-  "Quiet Luxury",
-  "Cyber Y2K",
+  "Pose Gel-X",
+  "Motifs iconiques",
+  "Mixed Art",
   "Baddie Starter Pack",
+  "Subversif",
+  "Minimalisme texturé",
+  "Matières hybrides",
+  "Bijouterie d'ongle",
+  "Précision Micro-Graphique"
 ];
 
 export function Marquee() {
