@@ -23,7 +23,7 @@ export function HandMenu({ onHome }: { onHome: () => void }) {
     id: "home",
     label: "HOME",
     // auriculaire — cheetah, penché à gauche
-    left: "60%", top: "0%", width: "15%", height: "30%",
+    left: "65%", top: "0%", width: "15%", height: "30%",
     action: onHome,
   },
   {
