@@ -41,11 +41,11 @@ function Index() {
           </div>
 
           {/* Description FR */}
-          <p className="mt-10 max-w-2xl text-center text-base md:text-lg leading-relaxed text-foreground/80 font-display italic reveal reveal-delay-2">
-            NAILZ X AVA — EDITORIAL NAILS
-            ✦ Matières : Gel 3D, chrome brut, effets aura, dentelle, piercings.
-            ✦ Vibe : Cyber, gothique moderne, edgy-coquette.
-            ✦ Règle : Unique. Sur-mesure. Sans compromis.
+          <p className="mt-10 max-w-2xl text-center text-base md:text-lg leading-relaxed text-foreground/80 font-display italic reveal reveal-delay-2 whitespace-pre-line">
+             NAILZ X AVA — EDITORIAL NAILS
+             ✦ Matières : Gel 3D, chrome brut, effets aura, dentelle, piercings.
+             ✦ Vibe : Cyber, gothique moderne, edgy-coquette.
+             ✦ Règle : Unique. Sur-mesure. Sans compromis.
           </p>
 
           {/* Hand menu */}
