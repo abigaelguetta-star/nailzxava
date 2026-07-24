@@ -9,20 +9,32 @@ export const Route = createFileRoute("/selector")({
   head: () => ({
     meta: [
       { title: "Nail Selector — nailzxava" },
-      { name: "description", content: "Galerie éditoriale des créations d'Ava. Filtre par technique, forme et longueur pour composer ton style." },
+      { name: "description", content: "Galerie éditoriale des créations d'Ava. Filtre par technique, forme, longueur et couleur pour composer ton style." },
     ],
   }),
 });
 
-interface DisplayPose { id: string; name: string; vibe: string; image: string }
+interface DisplayPose { 
+  id: string; 
+  name: string; 
+  vibe: string; 
+  colors: string[]; 
+  image: string; 
+}
+
+// Liste des couleurs principales présentées dans le sélecteur
+const AVAILABLE_COLORS = [
+  "Black", "White", "Silver", "Chrome", "Pink", "Red", "Blue", "Green", "Kaki", "Bordeaux", "Yellow", "Brown", "Nude"
+];
 
 function Selector() {
   const [dbItems, setDbItems] = useState<DisplayPose[]>([]);
 
-  // 3 états distincts pour gérer notre entonnoir de filtrage
+  // 4 états pour gérer l'entonnoir de filtrage
   const [tech, setTech] = useState<"Tout" | "Gel-X" | "Semi-permanent">("Tout");
   const [forme, setForme] = useState<"Tout" | "Amande" | "Carré">("Tout");
   const [longueur, setLongueur] = useState<"Tout" | "court" | "medium" | "long">("Tout");
+  const [couleur, setCouleur] = useState<string>("Tout");
 
   // Réinitialise les sous-filtres si on change de technique
   const handleTechChange = (newTech: "Tout" | "Gel-X" | "Semi-permanent") => {
@@ -38,19 +50,31 @@ function Selector() {
   };
 
   useEffect(() => {
-    supabase.from("gallery_items").select("id,name,vibe,image_url").eq("published", true)
+    supabase.from("gallery_items").select("id,name,vibe,colors,image_url").eq("published", true)
       .order("sort_order").order("created_at", { ascending: false })
       .then(({ data }) => {
-        if (data) setDbItems(data.map((d) => ({ id: d.id, name: d.name, vibe: d.vibe, image: d.image_url })));
+        if (data) setDbItems(data.map((d) => ({ 
+          id: d.id, 
+          name: d.name, 
+          vibe: d.vibe, 
+          colors: d.colors || [], 
+          image: d.image_url 
+        })));
       });
   }, []);
 
   const all: DisplayPose[] = useMemo(() => {
-    const fromStatic = POSES.map((p) => ({ id: p.id, name: p.name, vibe: p.vibe as string, image: p.image }));
+    const fromStatic = POSES.map((p) => ({ 
+      id: p.id, 
+      name: p.name, 
+      vibe: p.vibe as string, 
+      colors: p.colors || [], 
+      image: p.image 
+    }));
     return [...dbItems, ...fromStatic];
   }, [dbItems]);
 
-  // Logique de filtrage par étapes sur la chaîne (ex: "Amande court - Gel-X")
+  // Logique de filtrage par étapes
   const filtered = useMemo(() => {
     return all.filter((p) => {
       const v = p.vibe.toLowerCase();
@@ -66,9 +90,15 @@ function Selector() {
       // 3. Filtrer par longueur (uniquement si Gel-X)
       if (tech === "Gel-X" && longueur !== "Tout" && !v.includes(longueur)) return false;
 
+      // 4. Filtrer par couleur
+      if (couleur !== "Tout") {
+        const poseColors = p.colors.map((c) => c.toLowerCase());
+        if (!poseColors.includes(couleur.toLowerCase())) return false;
+      }
+
       return true;
     });
-  }, [tech, forme, longueur, all]);
+  }, [tech, forme, longueur, couleur, all]);
 
   return (
     <div className="relative">
@@ -83,8 +113,10 @@ function Selector() {
           Chaque pose est une création unique. Filtre selon tes envies et enregistre tes préférées.
         </p>
 
-        {/* --- ÉTAPE 1 : LA TECHNIQUE --- */}
+        {/* --- CONTENEUR DES FILTRES --- */}
         <div className="space-y-4 mt-12">
+
+          {/* --- ÉTAPE 1 : LA TECHNIQUE --- */}
           <div className="flex flex-wrap gap-2">
             <button onClick={() => handleTechChange("Tout")} className={`pill ${tech === "Tout" ? "active" : ""}`}>
               Tout voir
@@ -129,6 +161,24 @@ function Selector() {
               </button>
             </div>
           )}
+
+          {/* --- ÉTAPE 4 : LA COULEUR --- */}
+          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-border/40 animate-fade-in">
+            <span className="eyebrow mr-2 text-[10px]">Couleur :</span>
+            <button onClick={() => setCouleur("Tout")} className={`pill text-xs ${couleur === "Tout" ? "active" : ""}`}>
+              Toutes
+            </button>
+            {AVAILABLE_COLORS.map((c) => (
+              <button
+                key={c}
+                onClick={() => setCouleur(couleur === c ? "Tout" : c)}
+                className={`pill text-xs ${couleur === c ? "active" : ""}`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+
         </div>
       </div>
 
