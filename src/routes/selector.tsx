@@ -22,7 +22,7 @@ interface DisplayPose {
   image: string; 
 }
 
-// Liste des couleurs principales présentées dans le sélecteur
+// Liste des couleurs principales
 const AVAILABLE_COLORS = [
   "Black", "White", "Silver", "Chrome", "Pink", "Red", "Blue", "Green", "Kaki", "Bordeaux", "Yellow", "Brown", "Nude"
 ];
@@ -30,11 +30,14 @@ const AVAILABLE_COLORS = [
 function Selector() {
   const [dbItems, setDbItems] = useState<DisplayPose[]>([]);
 
-  // 4 états pour gérer l'entonnoir de filtrage
+  // États pour gérer l'entonnoir de filtrage
   const [tech, setTech] = useState<"Tout" | "Gel-X" | "Semi-permanent">("Tout");
   const [forme, setForme] = useState<"Tout" | "Amande" | "Carré">("Tout");
   const [longueur, setLongueur] = useState<"Tout" | "court" | "medium" | "long">("Tout");
+  
+  // Gestion de la couleur et de l'affichage du menu déroulant des couleurs
   const [couleur, setCouleur] = useState<string>("Tout");
+  const [showColors, setShowColors] = useState<boolean>(false);
 
   // Réinitialise les sous-filtres si on change de technique
   const handleTechChange = (newTech: "Tout" | "Gel-X" | "Semi-permanent") => {
@@ -116,8 +119,8 @@ function Selector() {
         {/* --- CONTENEUR DES FILTRES --- */}
         <div className="space-y-4 mt-12">
 
-          {/* --- ÉTAPE 1 : LA TECHNIQUE --- */}
-          <div className="flex flex-wrap gap-2">
+          {/* --- ÉTAPE 1 : TECHNIQUE & DÉROULANT COULEUR --- */}
+          <div className="flex flex-wrap items-center gap-2">
             <button onClick={() => handleTechChange("Tout")} className={`pill ${tech === "Tout" ? "active" : ""}`}>
               Tout voir
             </button>
@@ -126,6 +129,14 @@ function Selector() {
             </button>
             <button onClick={() => handleTechChange("Semi-permanent")} className={`pill ${tech === "Semi-permanent" ? "active" : ""}`}>
               Semi-Permanent
+            </button>
+
+            {/* Bouton pour ouvrir/fermer le filtre couleur */}
+            <button
+              onClick={() => setShowColors(!showColors)}
+              className={`pill border-dashed ${couleur !== "Tout" ? "active" : ""}`}
+            >
+              Couleur {couleur !== "Tout" ? `: ${couleur}` : "+"}
             </button>
           </div>
 
@@ -162,22 +173,26 @@ function Selector() {
             </div>
           )}
 
-          {/* --- ÉTAPE 4 : LA COULEUR --- */}
-          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-border/40 animate-fade-in">
-            <span className="eyebrow mr-2 text-[10px]">Couleur :</span>
-            <button onClick={() => setCouleur("Tout")} className={`pill text-xs ${couleur === "Tout" ? "active" : ""}`}>
-              Toutes
-            </button>
-            {AVAILABLE_COLORS.map((c) => (
+          {/* --- ÉTAPE 4 : SOUS-MENU DE SÉLECTION DES COULEURS (AFFICHE QUAND SHOWCOLORS = TRUE) --- */}
+          {showColors && (
+            <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-border/40 animate-fade-in">
               <button
-                key={c}
-                onClick={() => setCouleur(couleur === c ? "Tout" : c)}
-                className={`pill text-xs ${couleur === c ? "active" : ""}`}
+                onClick={() => setCouleur("Tout")}
+                className={`pill text-xs ${couleur === "Tout" ? "active" : ""}`}
               >
-                {c}
+                Toutes les couleurs
               </button>
-            ))}
-          </div>
+              {AVAILABLE_COLORS.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setCouleur(couleur === c ? "Tout" : c)}
+                  className={`pill text-xs ${couleur === c ? "active" : ""}`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          )}
 
         </div>
       </div>
