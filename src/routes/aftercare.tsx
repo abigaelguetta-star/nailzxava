@@ -155,37 +155,38 @@ function Aftercare() {
   return (
     <div className="relative min-h-screen bg-background">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&display=swap');
-        .ballet { font-family: 'Ballet', cursive; }
         .paper-clip { 
           clip-path: polygon(0% 0%,2% 0.3%,4% 0%,6% 0.5%,8% 0.1%,10% 0.4%,12% 0%,14% 0.3%,16% 0.1%,18% 0.4%,20% 0%,22% 0.3%,24% 0.1%,26% 0.4%,28% 0%,30% 0.3%,32% 0.1%,34% 0.4%,36% 0%,38% 0.3%,40% 0.1%,42% 0.4%,44% 0%,46% 0.3%,48% 0.1%,50% 0.4%,52% 0%,54% 0.3%,56% 0.1%,58% 0.4%,60% 0%,62% 0.3%,64% 0.1%,66% 0.4%,68% 0%,70% 0.3%,72% 0.1%,74% 0.4%,76% 0%,78% 0.3%,80% 0.1%,82% 0.4%,84% 0%,86% 0.3%,88% 0.1%,90% 0.4%,92% 0%,94% 0.3%,96% 0.1%,100% 2%,99.5% 10%,100% 18%,99.3% 26%,100% 34%,99.5% 42%,100% 50%,99.3% 58%,100% 66%,99.5% 74%,100% 82%,99.3% 90%,98% 98%,96% 99.7%,94% 100%,92% 99.6%,90% 100%,88% 99.7%,86% 100%,84% 99.6%,82% 100%,80% 99.7%,78% 100%,76% 99.6%,74% 100%,72% 99.7%,70% 100%,68% 99.6%,66% 100%,64% 99.7%,62% 100%,60% 99.6%,58% 100%,56% 99.7%,54% 100%,52% 99.6%,50% 100%,48% 99.7%,46% 100%,44% 99.6%,42% 100%,40% 99.7%,38% 100%,36% 99.6%,34% 100%,32% 99.7%,30% 100%,28% 99.6%,26% 100%,24% 99.7%,22% 100%,20% 99.6%,18% 100%,16% 99.7%,14% 100%,12% 99.6%,10% 100%,8% 99.7%,6% 100%,4% 99.6%,2% 100%,0% 99.7%);
         }
-        .hole-wrap { width:28px; height:28px; position:relative; }
-        .hole-wrap::before { content:''; position:absolute; inset:4px; background:var(--background); border-radius:50%; }
-        .hole-wrap::after { content:''; position:absolute; inset:-4px; border-radius:50%; box-shadow:inset 0 0 0 3px #c8b48a,2px -2px 0 1px #b8a07a,-3px 2px 0 1px #c0aa80; clip-path:polygon(20% 0%,80% 5%,100% 20%,95% 80%,80% 100%,20% 95%,0% 80%,5% 20%); }
+        .hole-wrap { width:22px; height:22px; position:relative; }
+        .hole-wrap::before { content:''; position:absolute; inset:3px; background:var(--background); border-radius:50%; }
+        .hole-wrap::after { content:''; position:absolute; inset:-3px; border-radius:50%; box-shadow:inset 0 0 0 2px #c8b48a,2px -2px 0 1px #b8a07a,-2px 2px 0 1px #c0aa80; clip-path:polygon(20% 0%,80% 5%,100% 20%,95% 80%,80% 100%,20% 95%,0% 80%,5% 20%); }
       `}</style>
 
-      <div className="max-w-[760px] mx-auto px-6 pt-12 md:pt-20 pb-4">
+      {/* TITRE DE EN-TÊTE - ESPACEMENT RÉDUIT (pb-1) */}
+      <div className="max-w-[760px] mx-auto px-6 pt-12 md:pt-16 pb-1">
         <p className="eyebrow">— Aftercare</p>
-        <h1 className="headline mt-4">
+        <h1 className="headline mt-2">
           Garde-les <span className="headline-italic">parfaits.</span>
         </h1>
       </div>
 
-      {/* PAPER */}
-      <div className="max-w-[760px] mx-auto px-6 pb-8 relative">
+      {/* PAPER - ESPACEMENT HAUT RÉDUIT (pt-2) */}
+      <div className="max-w-[760px] mx-auto px-6 pt-2 pb-8 relative">
         <div
           className="paper-clip relative"
           style={{
             background: "#ede4cc",
-            padding: "64px 72px 72px 88px",
+            padding: "56px 72px 64px 88px",
             boxShadow: "inset 40px 0 60px rgba(0,0,0,0.06), inset 120px 80px 100px rgba(255,255,255,0.12), 0 20px 80px rgba(0,0,0,0.3)",
             animation: "popIn .5s cubic-bezier(0.34,1.56,0.64,1) both",
           }}
         >
-          {/* HOLES */}
-          <div className="absolute -left-4 top-0 bottom-0 flex flex-col justify-evenly pointer-events-none z-10">
-            {[0,1,2,3,4].map(i => <div key={i} className="hole-wrap"/>)}
+          {/* HOLES (8 TROUS AU LIEU DE 5) */}
+          <div className="absolute -left-3.5 top-2 bottom-2 flex flex-col justify-between pointer-events-none z-10 py-4">
+            {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+              <div key={i} className="hole-wrap" />
+            ))}
           </div>
 
           {/* TIPS */}
@@ -199,9 +200,15 @@ function Aftercare() {
                     <DoodleComponent />
                   </div>
                   <div className="flex-1">
-                    <p className="ballet text-sm mb-1" style={{ color: "#FF0066" }}>— {tip.num}</p>
-                    <h2 className="ballet text-2xl mb-2 leading-snug whitespace-pre-line" style={{ color: "#FF0066" }}>{tip.title}</h2>
-                    <p style={{ fontFamily: "'Caveat', cursive", fontSize: "17px", color: "#1a1209", lineHeight: 1.6 }}>{tip.text}</p>
+                    <p className="font-display text-sm tracking-wider uppercase mb-1" style={{ color: "#FF0066" }}>
+                      — {tip.num}
+                    </p>
+                    <h2 className="font-display text-xl md:text-2xl mb-2 leading-snug whitespace-pre-line" style={{ color: "#FF0066" }}>
+                      {tip.title}
+                    </h2>
+                    <p style={{ fontFamily: "'Caveat', cursive", fontSize: "17px", color: "#1a1209", lineHeight: 1.6 }}>
+                      {tip.text}
+                    </p>
                   </div>
                 </div>
                 {i < TIPS.length - 1 && (
