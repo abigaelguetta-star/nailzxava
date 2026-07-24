@@ -163,7 +163,7 @@ function Aftercare() {
         .hole-wrap::after { content:''; position:absolute; inset:-3px; border-radius:50%; box-shadow:inset 0 0 0 2px #c8b48a,2px -2px 0 1px #b8a07a,-2px 2px 0 1px #c0aa80; clip-path:polygon(20% 0%,80% 5%,100% 20%,95% 80%,80% 100%,20% 95%,0% 80%,5% 20%); }
       `}</style>
 
-      {/* TITRE DE EN-TÊTE - ESPACEMENT RÉDUIT (pb-1) */}
+      {/* TITRE DE EN-TÊTE */}
       <div className="max-w-[760px] mx-auto px-6 pt-12 md:pt-16 pb-1">
         <p className="eyebrow">— Aftercare</p>
         <h1 className="headline mt-2">
@@ -171,7 +171,7 @@ function Aftercare() {
         </h1>
       </div>
 
-      {/* PAPER - ESPACEMENT HAUT RÉDUIT (pt-2) */}
+      {/* PAPER */}
       <div className="max-w-[760px] mx-auto px-6 pt-2 pb-8 relative">
         <div
           className="paper-clip relative"
@@ -182,7 +182,7 @@ function Aftercare() {
             animation: "popIn .5s cubic-bezier(0.34,1.56,0.64,1) both",
           }}
         >
-          {/* HOLES (8 TROUS AU LIEU DE 5) */}
+          {/* HOLES */}
           <div className="absolute -left-3.5 top-2 bottom-2 flex flex-col justify-between pointer-events-none z-10 py-4">
             {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
               <div key={i} className="hole-wrap" />
@@ -206,7 +206,7 @@ function Aftercare() {
                     <h2 className="font-display text-xl md:text-2xl mb-2 leading-snug whitespace-pre-line" style={{ color: "#FF0066" }}>
                       {tip.title}
                     </h2>
-                    <p style={{ fontFamily: "'Caveat', cursive", fontSize: "17px", color: "#1a1209", lineHeight: 1.6 }}>
+                    <p className="text-sm md:text-base text-neutral-800 leading-relaxed">
                       {tip.text}
                     </p>
                   </div>
