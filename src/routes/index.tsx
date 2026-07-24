@@ -42,11 +42,10 @@ function Index() {
 
           {/* Description FR */}
           <p className="mt-10 max-w-2xl text-center text-base md:text-lg leading-relaxed text-foreground/80 font-display italic reveal reveal-delay-2">
-            Bienvenue dans l'univers NAILZXAVA, où l'onglerie devient une pièce d'archive.
-            Entre luxe brut et esthétique cinématographique, nous sculptons votre identité
-            jusqu'au bout des doigts. Ici, chaque pose est un manifeste de confiance,
-            un mélange de chrome liquide et de glamour sauvage. Redéfinissez votre allure,
-            affirmez votre vibe : l'art de la baddie, élevé au rang d'icône.
+            NAILZ X AVA — EDITORIAL NAILS
+            ✦ Matières : Gel 3D, chrome brut, effets aura, dentelle, piercings.
+            ✦ Vibe : Cyber, gothique moderne, edgy-coquette.
+            ✦ Règle : Unique. Sur-mesure. Sans compromis.
           </p>
 
           {/* Hand menu */}
@@ -86,7 +85,7 @@ function Index() {
       {/* À PROPOS */}
       <section className="relative bg-background border-t border-border">
         <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 py-24">
-          <p className="eyebrow">— À propos</p>
+          <p className="eyebrow">— 02 À propos</p>
           <p className="mt-8 max-w-3xl font-display text-2xl md:text-3xl leading-relaxed text-foreground/90">
             Je fais du nail art depuis 1 an et demi. J'aime particulièrement les poses qui sortent de l'ordinaire : ongles asymétriques, effets 3D, jeux de couleurs et de strass.
           </p>
